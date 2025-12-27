@@ -220,7 +220,7 @@
       z-index: 100;
       margin-left: auto;
       margin-right: auto;
-      background-color: #fff;
+      background-color: #000;
     }
 
     #top-nav-bar > #pagetop {
@@ -248,39 +248,66 @@
       height: 56px;
       left: 0;
       top: 0;
-      background-color: white;
+      background-color: black;
     }
 
     .botao {
       margin: 10px;
       padding: 8px 16px;
-      background-color: black;
-      color: white;
+      background-color: white;
+      color: black;
       border-radius: 5px;
       vertical-align: middle;
       cursor: pointer;
     }
+
+    .botao-img {
+      background: #fff;
+      border: 2px solid #fff;
+      padding: 0;
+      cursor: pointer;
+      border: 2px solid #fff;
+      width: 35px;
+      height: 35px;
+      border-radius: 5px;
+    }
+
+    .botao-img img {
+      width: 30;
+      height: 30px;
+      background-color: #fff;
+    }
+
   </style>
 </head>
 <body>
 
   <div id="top-nav-bar">
     <div id="pagetop">
-      <img src="img/hoffens icone.png" style="width: 54px; height: 50px; padding: 10px;">
+      <img src="img/hoffens_logo_cheia_invertida.png" style="width: 54px; height: 50px; padding: 10px;">
 
-      <button onclick="salvarFicha()" class="botao">Salvar Ficha</button>
-
-      <button onclick="exportarFicha()" class="botao">Baixar Ficha</button>
-
-      <button onclick="deletarFicha()" class="botao">Apagar Ficha</button>
-
-      <input type="file" accept=".json" onchange="importarFicha(event)" class="botao">
+      <button onclick="salvarFicha()" class="botao-img">
+        <img src="img/save.png" title="Salvar Ficha">
+      </button>
 
       <select id="listaFichas" onchange="carregarFicha(this.value)" class="botao">
         <option value="">— selecionar personagem —</option>
       </select>
 
-      <button onclick="limparFicha()" class="botao">Limpar Ficha</button>
+      <button onclick="deletarFicha()" class="botao-img">
+        <img src="img/delete.png" title="Apagar Ficha">
+      </button>
+
+      <button onclick="exportarFicha()" class="botao-img">
+        <img src="img/download.png" title="Baixar Ficha">
+      </button>
+
+      <input type="file" accept=".json" onchange="importarFicha(event)" class="botao">
+
+      <button onclick="limparFicha()" class="botao-img">
+        <img src="img/erase.png" title="Limpar Ficha">
+      </button>
+
     </div>
   </div>
 
@@ -1232,9 +1259,11 @@
         { type: "application/json" }
       );
 
+      const nome = document.getElementById("personagem").value;
+
       const link = document.createElement("a");
       link.href = URL.createObjectURL(blob);
-      link.download = "ficha-rpg.json";
+      link.download = `ficha-${nome}.json`;
       link.click();
     }
 
