@@ -106,7 +106,7 @@ function carregarFicha(nome) {
   });
 
   document.getElementById("pagina").innerHTML = nome;
-
+  recalcularTudo();
 }
 
 function deletarFicha() {
@@ -268,6 +268,11 @@ function recalcularTudo() {
       atributo
     );
   });
+
+  const corrupcao = document.getElementById("corrupcao");
+  const max = document.getElementById("corrupcao-maximo");
+
+  atualizarBarra(corrupcao, max)
 
 }
 
