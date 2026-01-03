@@ -6,8 +6,13 @@ function exportarFicha() {
     }
   });
 
+  const ficha = {
+    dados,
+    contadorVantagens
+  };
+
   const blob = new Blob(
-    [JSON.stringify(dados, null, 2)],
+    [JSON.stringify(ficha, null, 2)],
     { type: "application/json" }
   );
 
@@ -25,7 +30,17 @@ function importarFicha(event) {
 
   const reader = new FileReader();
   reader.onload = () => {
-    const dados = JSON.parse(reader.result);
+    const json = JSON.parse(reader.result);
+    const dados = json.dados;
+    const nVantagens = json.contadorVantagens || 0;
+
+    const listaVantagens = document.getElementById("lista-vantagens");
+    listaVantagens.innerHTML = "";
+    contadorVantagens = 0;
+
+    for (let i = 0; i < nVantagens; i++) {
+      adicionarVantagem();
+    }
 
     Object.keys(dados).forEach(id => {
       const el = document.getElementById(id);
@@ -84,6 +99,7 @@ function salvarFicha() {
   const nome = document.getElementById("personagem").value;
 
   localStorage.setItem(`ficha:${nome}`, JSON.stringify(dados));
+  localStorage.setItem(`contadorVantagens:${nome}`, contadorVantagens);
 
   document.getElementById("pagina").innerHTML = nome;
 
@@ -100,6 +116,17 @@ function carregarFicha(nome) {
   const dados = JSON.parse(localStorage.getItem(`ficha:${nome}`));
   if (!dados) return;
 
+  const nVantagens = JSON.parse(localStorage.getItem(`contadorVantagens:${nome}`));
+
+  const listaVantagens = document.getElementById("lista-vantagens");
+  listaVantagens.innerHTML = "";
+
+  contadorVantagens = 0;
+
+  for (let index = 0; index < nVantagens; index++) {
+    adicionarVantagem();
+  }
+
   Object.keys(dados).forEach(id => {
     const el = document.getElementById(id);
     if (el) el.value = dados[id];
@@ -114,6 +141,7 @@ function deletarFicha() {
   const nome = document.getElementById("personagem").value;
 
   localStorage.removeItem(`ficha:${nome}`);
+  localStorage.removeItem(`contadorVantagens:${nome}`);
 
   const index = getIndex().filter(n => n !== nome);
   saveIndex(index);
@@ -139,6 +167,10 @@ function limparFicha() {
       el.value = "";
     }
   });
+
+  contadorVantagens = 0;
+  const listaVantagens = document.getElementById("lista-vantagens");
+  listaVantagens.innerHTML = "";
 
   // limpa seleção de ficha
   const lista = document.getElementById("listaFichas");

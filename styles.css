@@ -53,7 +53,7 @@ input {
 }
 
 .habilities-skills-adv {
-  grid-template-columns: 25% 30% 43%;
+  grid-template-columns: 55% 43%;
   border: none;
   gap: 12px;
   align-items: start;
@@ -66,6 +66,10 @@ input {
   padding: 10px;
   align-items: center;
   justify-items: center;
+}
+
+.sub-grupo{
+  display: grid;
 }
 
 .defenses {
@@ -88,6 +92,35 @@ input {
   align-items: center;
   padding: 10px;
   justify-items: center;
+}
+
+.vantagens {
+  gap: 5px;
+  align-items: center;
+  font-size: 15px;
+  padding: 10px;
+}
+
+.vantagens-linha {
+  display: grid;
+  grid-template-columns: 10% 15% 70%;
+  gap: 10px;
+  margin: 3px;
+}
+
+#lista-vantagens {
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+.vantagens-linha input {
+  background-color: rgba(123,181,238,0.5);
+  border-radius: 5px;
+  border: none;
+  width: 100%;
+  padding: 5px;
+  box-sizing: border-box;
+  text-align: left;
 }
 
 table {
@@ -311,6 +344,20 @@ input[type="number"]::-webkit-outer-spin-button {
   color: rgb(90, 123, 254);
   z-index: 1;
 }
+
+.vantagens span {
+  color: rgb(90, 123, 254);
+  font-size: 20px;
+}
+
+.vantagens select {
+  font-size: 15px;
+  background-color: rgba(123,181,238,0.5);
+  border: none;
+  border-radius: 5px;
+  text-align: center;
+}
+
 
 select {
   font-family: NewsflashBB;

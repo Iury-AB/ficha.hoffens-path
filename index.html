@@ -114,325 +114,374 @@
     </div>
 
     <div class="bloco habilities-skills-adv">
+
+      <div class="sub-grupo" style="grid-template-columns: 44% 56%;">
       
-      <div class="bloco habilities">
-        <h1>Habilidades</h1><br>
-        <div class="hability stat">
-          <label for="forca">Forca</label><br>
-          <input class="dependente" type="number" id="forca" oninput="calcularCarga()">
-        </div>
+        <div class="bloco habilities">
+          <h1>Habilidades</h1><br>
+          <div class="hability stat">
+            <label for="forca">Forca</label><br>
+            <input class="dependente" type="number" id="forca" oninput="calcularCarga()">
+          </div>
 
-        <div class="sub-hab">
-          <label for="carga">Carga</label><br>
-          <input type="text" id="carga" readonly>
-          <script>
-            function calcularCarga() {
-              const hab = parseInt(document.getElementById("forca").value, 10);
-              let Forca = "---";
-
-              if (hab === -5) {
-                Forca = "1 Kg";
-              } else if (hab === -4) {
-                Forca = "2 Kg";
-              } else if (hab === -3) {
-                Forca = "4 Kg";
-              } else if (hab === -2) {
-                Forca = "6 Kg";
-              } else if (hab === -1) {
-                Forca = "8 Kg";
-              } else if (hab === 0) {
-                Forca = "10 Kg";
-              } else if (hab === 1) {
-                Forca = "20 Kg";
-              } else if (hab === 2) {
-                Forca = "30 Kg";
-              } else if (hab === 3) {
-                Forca = "40 Kg";
-              } else if (hab === 4) {
-                Forca = "50 Kg";
-              } else if (hab === 5) {
-                Forca = "100 Kg";
-              } else if (hab === 6) {
-                Forca = "120 Kg";
-              } else if (hab === 7) {
-                Forca = "140 Kg";
-              } else if (hab === 8) {
-                Forca = "160 Kg";
-              } else if (hab === 9) {
-                Forca = "180 Kg";
-              } else if (hab === 10) {
-                Forca = "400 Kg";
-              } else if (hab === 11) {
-                Forca = "500 Kg";
-              } else if (hab === 12) {
-                Forca = "600 Kg";
-              } else if (hab === 13) {
-                Forca = "700 Kg";
-              } else if (hab === 14) {
-                Forca = "800 Kg";
-              } else if (hab === 15) {
-                Forca = "1,6 ton";
-              } else if (hab === 16) {
-                Forca = "1,8 ton";
-              } else if (hab === 17) {
-                Forca = "2 ton";
-              } else if (hab === 18) {
-                Forca = "2,2 ton";
-              } else if (hab === 19) {
-                Forca = "2,4 ton";
-              } else if (hab === 20) {
-                Forca = "5 ton";
-              } else if (hab === 21) {
-                Forca = "5,5 ton";
-              } else if (hab === 22) {
-                Forca = "6 ton";
-              } else if (hab === 23) {
-                Forca = "6,5 ton";
-              } else if (hab === 24) {
-                Forca = "7 ton";
-              } else if (hab === 25) {
-                Forca = "15 ton";
-              } else if (hab === 26) {
-                Forca = "16 ton";
-              } else if (hab === 27) {
-                Forca = "17 ton";
-              } else if (hab === 28) {
-                Forca = "18 ton";
-              } else if (hab === 29) {
-                Forca = "19 ton";
-              } else if (hab === 30) {
-                Forca = "50 ton";
-              }
-
-              document.getElementById("carga").value = Forca;
-            }
-          </script>
-        </div>
-
-        <div class="hability stat">
-          <label for="agilidade">Agilidade</label><br>
-          <input class="dependente" type="number" id="agilidade" oninput="calcularDeslocamento()">
-        </div>
-
-        <div class="sub-hab">
-          <label for="deslocamento">Deslocamento</label><br>
-          <input type="text" id="deslocamento" readonly>
-          <script>
-            function calcularDeslocamento() {
-              const agilidade = parseInt(document.getElementById("agilidade").value, 10);
-              let deslocamento = 0;
-              if(agilidade >= 0){
-                deslocamento = (agilidade + 1)*1.5;
-              }else if(agilidade < 0){
-                deslocamento = Math.pow(2, agilidade+1);
-                deslocamento = deslocamento.toFixed(2)
-              }
-              document.getElementById("deslocamento").value = deslocamento + " m";
-            }
-          </script>
-        </div>
-
-        <div class="hability stat">
-          <label for="luta">Luta</label><br>
-          <input class="dependente" type="number" id="luta">
-        </div>
-
-        <div class="hability stat">
-          <label for="vigor">Vigor</label><br>
-          <input class="dependente" type="number" id="vigor" oninput="calcularVida();calcularEstamina();">
-        </div>
-
-        <div class="hability stat">
-          <label for="intelecto">Intelecto</label><br>
-          <input class="dependente" type="number" id="intelecto">
-        </div>
-
-        <div class="hability stat">
-          <label for="prontidao">Prontidao</label><br>
-          <input class="dependente" type="number" id="prontidao">
-        </div>
-
-        <div class="hability stat">
-          <label for="destreza">Destreza</label><br>
-          <input class="dependente" type="number" id="destreza">
-        </div>
-
-        <div class="hability stat">
-          <label for="presenca">Presenca</label><br>
-          <input class="dependente" type="number" id="presenca">
-        </div>
-
-      </div>
-
-      <div>
-        <div class="bloco defenses">
-          <h1>Defesa</h1>
-          <p class="normal-text" style="font-size: 13px;text-align: center;">Total</p>
-          <p class="normal-text" style="font-size: 13px;text-align: center;">Grad. Defesa</p>
-          <p class="normal-text" style="font-size: 13px;text-align: center;">Outros</p>
-          <p class="normal-text" style="font-size: 13px;text-align: center;color:rgb(90, 123, 254);">
-            Max
-          </p>
-
-          <span class="normal-text" style="font-size: 20px;">
-            <span style="font-size: 13px;">(Agi)</span> Esquiva
-          </span>
           <div class="sub-hab">
-            <input type="number" id="esquiva-total" readonly>
-          </div>
-          <div class="stat">
-            <input class="dependente" type="number" id="esquiva-grad">
-          </div>
-          <div class="stat">
-            <input class="dependente" type="number" id="esquiva-outros">
-          </div>
-          <div class="small-number">
-            <input type="number" id="esquiva-max" readonly>
-          </div>
-
-          <span class="normal-text" style="font-size: 20px;">
-            <span style="font-size: 13px;">(Lut)</span> Aparar
-          </span>
-          <div class="sub-hab">
-            <input type="number" id="aparar-total" readonly>
-          </div>
-          <div class="stat">
-            <input class="dependente" type="number" id="aparar-grad">
-          </div>
-          <div class="stat">
-            <input class="dependente" type="number" id="aparar-outros">
-          </div>
-          <div class="small-number">
-            <input type="number" id="aparar-max" readonly>
-          </div>
-
-          <span class="normal-text" style="font-size: 20px;">
-            <span style="font-size: 13px;">(Vig)</span> Fortitude
-          </span>
-          <div class="sub-hab">
-            <input type="number" id="fortitude-total" readonly>
-          </div>
-          <div class="stat">
-            <input class="dependente" type="number" id="fortitude-grad">
-          </div>
-          <div class="stat">
-            <input class="dependente" type="number" id="fortitude-outros">
-          </div>
-          <div class="small-number">
-            <input type="number" id="fortitude-max" readonly>
-          </div>
-
-          <span class="normal-text" style="font-size: 20px;">
-            <span style="font-size: 13px;">(Vig)</span> Resistencia
-          </span>
-          <div class="sub-hab">
-            <input type="number" id="resistencia-total" readonly>
-          </div>
-          <div class="stat">
-            <input class="dependente" type="number" id="resistencia-grad">
-          </div>
-          <div class="stat">
-            <input class="dependente" type="number" id="resistencia-outros">
-          </div>
-          <div class="small-number">
-            <input type="number" id="resistencia-max" readonly>
-          </div>
-
-          <span class="normal-text" style="font-size: 20px;">
-            <span style="font-size: 13px;">(Pro)</span> Vontade
-          </span>
-          <div class="sub-hab">
-            <input type="number" id="vontade-total" readonly>
-          </div>
-          <div class="stat">
-            <input class="dependente" type="number" id="vontade-grad">
-          </div>
-          <div class="stat">
-            <input class="dependente" type="number" id="vontade-outros">
-          </div>
-          <div class="small-number">
-            <input type="number" id="vontade-max" readonly>
-          </div>
-        </div>
-
-        <div class="bloco classe">
-          <div style="margin: 5px;" class="span-6">
-            <label for="classe">Classe:</label>
-            <select name="classes-option" id="classe" onchange="recalcularTudo()">
-              <option value="selecione"> — Escolha uma classe — </option>
-              <option value="Ajudante">Ajudante</option>
-              <option value="Atirador">Atirador</option>
-              <option value="Belico">Belico</option>
-              <option value="Guardiao">Guardiao</option>
-            </select>
-          </div>
-
-          <div class="field stat span-4">
-            <input type="number" id="corrupcao" style="width: 130px;" title="Corrupção" class="dependente">
-            <div style="margin-top: 10px; margin-left: 15px;">
-              <span style="margin-right: 15px;">Corrupcao</span>
-              <span>%</span>
-            </div>
-          </div>
-          <div class="field hability stat span-2">
-            <input type="number" id="corrupcao-maximo" style="width: 70px;" title="Limite de Corrupção">
-            <div style="margin-top: 10px; margin-left: 10px;">
-              <span>Limite</span>
-              <span>%</span>
-            </div>
-          </div>
-          <div class="span-6" style="position: relative;">
-            <hr align="left" style="position: absolute;height: 10px;margin-top: 18px; border: 2px solid black; width: 100%;">
-            <hr id="corrupcao-progresso" align="left" style="position: relative; z-index: 2;margin-left: 2px;">
+            <label for="carga">Carga</label><br>
+            <input type="text" id="carga" readonly>
             <script>
-              const barra = document.getElementById("corrupcao-progresso");
-              const corrupcao = document.getElementById("corrupcao");
-              const max = document.getElementById("corrupcao-maximo");
+              function calcularCarga() {
+                const hab = parseInt(document.getElementById("forca").value, 10);
+                let Forca = "---";
 
-              corrupcao.addEventListener("input", () => atualizarBarra(corrupcao, max));
-              max.addEventListener("input", () => atualizarBarra(corrupcao, max));
+                if (hab === -5) {
+                  Forca = "1 Kg";
+                } else if (hab === -4) {
+                  Forca = "2 Kg";
+                } else if (hab === -3) {
+                  Forca = "4 Kg";
+                } else if (hab === -2) {
+                  Forca = "6 Kg";
+                } else if (hab === -1) {
+                  Forca = "8 Kg";
+                } else if (hab === 0) {
+                  Forca = "10 Kg";
+                } else if (hab === 1) {
+                  Forca = "20 Kg";
+                } else if (hab === 2) {
+                  Forca = "30 Kg";
+                } else if (hab === 3) {
+                  Forca = "40 Kg";
+                } else if (hab === 4) {
+                  Forca = "50 Kg";
+                } else if (hab === 5) {
+                  Forca = "100 Kg";
+                } else if (hab === 6) {
+                  Forca = "120 Kg";
+                } else if (hab === 7) {
+                  Forca = "140 Kg";
+                } else if (hab === 8) {
+                  Forca = "160 Kg";
+                } else if (hab === 9) {
+                  Forca = "180 Kg";
+                } else if (hab === 10) {
+                  Forca = "400 Kg";
+                } else if (hab === 11) {
+                  Forca = "500 Kg";
+                } else if (hab === 12) {
+                  Forca = "600 Kg";
+                } else if (hab === 13) {
+                  Forca = "700 Kg";
+                } else if (hab === 14) {
+                  Forca = "800 Kg";
+                } else if (hab === 15) {
+                  Forca = "1,6 ton";
+                } else if (hab === 16) {
+                  Forca = "1,8 ton";
+                } else if (hab === 17) {
+                  Forca = "2 ton";
+                } else if (hab === 18) {
+                  Forca = "2,2 ton";
+                } else if (hab === 19) {
+                  Forca = "2,4 ton";
+                } else if (hab === 20) {
+                  Forca = "5 ton";
+                } else if (hab === 21) {
+                  Forca = "5,5 ton";
+                } else if (hab === 22) {
+                  Forca = "6 ton";
+                } else if (hab === 23) {
+                  Forca = "6,5 ton";
+                } else if (hab === 24) {
+                  Forca = "7 ton";
+                } else if (hab === 25) {
+                  Forca = "15 ton";
+                } else if (hab === 26) {
+                  Forca = "16 ton";
+                } else if (hab === 27) {
+                  Forca = "17 ton";
+                } else if (hab === 28) {
+                  Forca = "18 ton";
+                } else if (hab === 29) {
+                  Forca = "19 ton";
+                } else if (hab === 30) {
+                  Forca = "50 ton";
+                }
 
-              atualizarBarra();
+                document.getElementById("carga").value = Forca;
+              }
             </script>
           </div>
-          <div class="field sub-hab span-2 vida-estamina" style="gap: 15px;margin: 5px;">
-            <div>
-              <input type="number" id="vida" style="width: 100px;" title="Vida" readonly>
-              <div style="margin-top: 15px; margin-left: 30px;">
-                <span style="margin-right: 8px;">Vida</span>
-              </div>
-            </div>
-            
-            <div>
-              <input type="number" id="estamina" style="width: 100px;" title="Estamina" readonly>
-              <div style="margin-top: 15px; margin-left: 10px;">
-                <span style="margin-right: 8px;">Estamina</span>
-              </div>
-            </div>
+
+          <div class="hability stat">
+            <label for="agilidade">Agilidade</label><br>
+            <input class="dependente" type="number" id="agilidade" oninput="calcularDeslocamento()">
           </div>
 
-          <div class="field stat span-2" style="margin-left: 20px;padding: 5px;gap: 10px;position: relative;">
-            <div>
-              <input type="number" id="vida-outros" style="width: 50px;font-size: 20px;margin: auto;" class="dependente">
-              <div style="margin-left: 20px;margin-top: 10px;">
-                <span style="margin-right: 8px;">+</span>
-              </div>
-            </div>
-            <div>
-              <input type="number" id="estamina-outros" style="width: 50px;font-size: 20px;margin: auto;" class="dependente">
-              <div style="margin-top: 30px; margin-left: 20px;">
-                  <span style="margin-right: 8px;">+</span>
-              </div>
-            </div>
+          <div class="sub-hab">
+            <label for="deslocamento">Deslocamento</label><br>
+            <input type="text" id="deslocamento" readonly>
+            <script>
+              function calcularDeslocamento() {
+                const agilidade = parseInt(document.getElementById("agilidade").value, 10);
+                let deslocamento = 0;
+                if(agilidade >= 0){
+                  deslocamento = (agilidade + 1)*1.5;
+                }else if(agilidade < 0){
+                  deslocamento = Math.pow(2, agilidade+1);
+                  deslocamento = deslocamento.toFixed(2)
+                }
+                document.getElementById("deslocamento").value = deslocamento + " m";
+              }
+            </script>
           </div>
 
-          <div class="sub-hab span-2" style="gap: 5px;">
-            <label for="vida-classe">Bonus da Classe:</label>
-            <input type="number" id="vida-classe" style="position: relative;font-size: 20px;" readonly>
-            <label for="estamina-classe">Bonus da Classe:</label>
-            <input type="number" id="estamina-classe" style="position: relative;font-size: 20px;" readonly>
+          <div class="hability stat">
+            <label for="luta">Luta</label><br>
+            <input class="dependente" type="number" id="luta">
           </div>
+
+          <div class="hability stat">
+            <label for="vigor">Vigor</label><br>
+            <input class="dependente" type="number" id="vigor" oninput="calcularVida();calcularEstamina();">
+          </div>
+
+          <div class="hability stat">
+            <label for="intelecto">Intelecto</label><br>
+            <input class="dependente" type="number" id="intelecto">
+          </div>
+
+          <div class="hability stat">
+            <label for="prontidao">Prontidao</label><br>
+            <input class="dependente" type="number" id="prontidao">
+          </div>
+
+          <div class="hability stat">
+            <label for="destreza">Destreza</label><br>
+            <input class="dependente" type="number" id="destreza">
+          </div>
+
+          <div class="hability stat">
+            <label for="presenca">Presenca</label><br>
+            <input class="dependente" type="number" id="presenca">
+          </div>
+
         </div>
+
+        <div>
+          <div class="bloco defenses">
+            <h1>Defesa</h1>
+            <p class="normal-text" style="font-size: 13px;text-align: center;">Total</p>
+            <p class="normal-text" style="font-size: 13px;text-align: center;">Grad. Defesa</p>
+            <p class="normal-text" style="font-size: 13px;text-align: center;">Outros</p>
+            <p class="normal-text" style="font-size: 13px;text-align: center;color:rgb(90, 123, 254);">
+              Max
+            </p>
+
+            <span class="normal-text" style="font-size: 20px;">
+              <span style="font-size: 13px;">(Agi)</span> Esquiva
+            </span>
+            <div class="sub-hab">
+              <input type="number" id="esquiva-total" readonly>
+            </div>
+            <div class="stat">
+              <input class="dependente" type="number" id="esquiva-grad">
+            </div>
+            <div class="stat">
+              <input class="dependente" type="number" id="esquiva-outros">
+            </div>
+            <div class="small-number">
+              <input type="number" id="esquiva-max" readonly>
+            </div>
+
+            <span class="normal-text" style="font-size: 20px;">
+              <span style="font-size: 13px;">(Lut)</span> Aparar
+            </span>
+            <div class="sub-hab">
+              <input type="number" id="aparar-total" readonly>
+            </div>
+            <div class="stat">
+              <input class="dependente" type="number" id="aparar-grad">
+            </div>
+            <div class="stat">
+              <input class="dependente" type="number" id="aparar-outros">
+            </div>
+            <div class="small-number">
+              <input type="number" id="aparar-max" readonly>
+            </div>
+
+            <span class="normal-text" style="font-size: 20px;">
+              <span style="font-size: 13px;">(Vig)</span> Fortitude
+            </span>
+            <div class="sub-hab">
+              <input type="number" id="fortitude-total" readonly>
+            </div>
+            <div class="stat">
+              <input class="dependente" type="number" id="fortitude-grad">
+            </div>
+            <div class="stat">
+              <input class="dependente" type="number" id="fortitude-outros">
+            </div>
+            <div class="small-number">
+              <input type="number" id="fortitude-max" readonly>
+            </div>
+
+            <span class="normal-text" style="font-size: 20px;">
+              <span style="font-size: 13px;">(Vig)</span> Resistencia
+            </span>
+            <div class="sub-hab">
+              <input type="number" id="resistencia-total" readonly>
+            </div>
+            <div class="stat">
+              <input class="dependente" type="number" id="resistencia-grad">
+            </div>
+            <div class="stat">
+              <input class="dependente" type="number" id="resistencia-outros">
+            </div>
+            <div class="small-number">
+              <input type="number" id="resistencia-max" readonly>
+            </div>
+
+            <span class="normal-text" style="font-size: 20px;">
+              <span style="font-size: 13px;">(Pro)</span> Vontade
+            </span>
+            <div class="sub-hab">
+              <input type="number" id="vontade-total" readonly>
+            </div>
+            <div class="stat">
+              <input class="dependente" type="number" id="vontade-grad">
+            </div>
+            <div class="stat">
+              <input class="dependente" type="number" id="vontade-outros">
+            </div>
+            <div class="small-number">
+              <input type="number" id="vontade-max" readonly>
+            </div>
+          </div>
+
+          <div class="bloco classe">
+            <div style="margin: 5px;" class="span-6">
+              <label for="classe">Classe:</label>
+              <select name="classes-option" id="classe" onchange="recalcularTudo()">
+                <option value="selecione"> — Escolha uma classe — </option>
+                <option value="Ajudante">Ajudante</option>
+                <option value="Atirador">Atirador</option>
+                <option value="Belico">Belico</option>
+                <option value="Guardiao">Guardiao</option>
+              </select>
+            </div>
+
+            <div class="field stat span-4">
+              <input type="number" id="corrupcao" style="width: 130px;" title="Corrupção" class="dependente">
+              <div style="margin-top: 10px; margin-left: 15px;">
+                <span style="margin-right: 15px;">Corrupcao</span>
+                <span>%</span>
+              </div>
+            </div>
+
+            <div class="field hability stat span-2">
+              <input type="number" id="corrupcao-maximo" style="width: 70px;" title="Limite de Corrupção">
+              <div style="margin-top: 10px; margin-left: 10px;">
+                <span>Limite</span>
+                <span>%</span>
+              </div>
+            </div>
+
+            <div class="span-6" style="position: relative;">
+              <hr align="left" style="position: absolute;height: 10px;margin-top: 18px; border: 2px solid black; width: 100%;">
+              <hr id="corrupcao-progresso" align="left" style="position: relative; z-index: 2;margin-left: 2px;">
+              <script>
+                const barra = document.getElementById("corrupcao-progresso");
+                const corrupcao = document.getElementById("corrupcao");
+                const max = document.getElementById("corrupcao-maximo");
+
+                corrupcao.addEventListener("input", () => atualizarBarra(corrupcao, max));
+                max.addEventListener("input", () => atualizarBarra(corrupcao, max));
+
+                atualizarBarra();
+              </script>
+            </div>
+
+            <div class="field sub-hab span-2 vida-estamina" style="gap: 15px;margin: 5px;">
+              <div>
+                <input type="number" id="vida" style="width: 100px;" title="Vida" readonly>
+                <div style="margin-top: 15px; margin-left: 30px;">
+                  <span style="margin-right: 8px;">Vida</span>
+                </div>
+              </div>
+              
+              <div>
+                <input type="number" id="estamina" style="width: 100px;" title="Estamina" readonly>
+                <div style="margin-top: 15px; margin-left: 10px;">
+                  <span style="margin-right: 8px;">Estamina</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="field stat span-2" style="margin-left: 20px;padding: 5px;gap: 10px;position: relative;">
+              <div>
+                <input type="number" id="vida-outros" style="width: 50px;font-size: 20px;margin: auto;" class="dependente">
+                <div style="margin-left: 20px;margin-top: 10px;">
+                  <span style="margin-right: 8px;">+</span>
+                </div>
+              </div>
+              <div>
+                <input type="number" id="estamina-outros" style="width: 50px;font-size: 20px;margin: auto;" class="dependente">
+                <div style="margin-top: 30px; margin-left: 20px;">
+                    <span style="margin-right: 8px;">+</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="sub-hab span-2" style="gap: 5px;">
+              <label for="vida-classe">Bonus da Classe:</label>
+              <input type="number" id="vida-classe" style="position: relative;font-size: 20px;" readonly>
+              <label for="estamina-classe">Bonus da Classe:</label>
+              <input type="number" id="estamina-classe" style="position: relative;font-size: 20px;" readonly>
+            </div>
+          </div> 
+        </div>
+
+        <div class="bloco span-2 vantagens">
+          <h1>Vantagens</h1>
+          <div class="vantagens-linha">
+            <span>LVL</span>
+            <span>Tipo</span>
+            <span>Nome</span>
+          </div>
+
+          <div id="lista-vantagens">
+          </div>
+          <button onclick="adicionarVantagem();" class="botao-img" id="addVantagem" title="Adicionar Vantagem" style="justify-self: center;">
+            <img src="img/adicionar.png" alt="Adicionar Vantagem">
+          </button>
+          <script>
+            let contadorVantagens = 0;
+
+            function adicionarVantagem() {
+              contadorVantagens++;
+              
+              const listaVantagens = document.getElementById("lista-vantagens");
+
+              const novaLinha = document.createElement("div");
+              novaLinha.className = "vantagens-linha";
+              novaLinha.innerHTML = `
+                <input type="number" id="vantagem${contadorVantagens}-lvl" title="Nível da Vantagem">
+                <select name="tipo-vantagem" id="vantagem${contadorVantagens}-tipo">
+                  <option value="nenhum"> — Tipo — </option>
+                  <option value="combate">Combate</option>
+                  <option value="classe">Classe</option>
+                  <option value="geral">Geral</option>
+                  <option value="pericia">Pericia</option>
+                  <option value="sorte">Sorte</option>
+                </select>
+                <input type="text" id="vantagem${contadorVantagens}-nome" title="Vantagem ${contadorVantagens}">
+              `;
+                
+              listaVantagens.appendChild(novaLinha);
+            }
+            
+          </script>
+        </div>
+
       </div>
 
       <div class="bloco skills">
@@ -1057,6 +1106,9 @@
           
         </table>
       </div>
+
+      
+
     </div>
   </div>
 
