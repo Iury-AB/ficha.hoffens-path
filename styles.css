@@ -250,7 +250,8 @@ input[type="number"]::-webkit-outer-spin-button {
   margin: 0;
 }
 
-#top-nav-bar {
+.barra-superior {
+  position: absolute;
   height: 0;
   display: block;
   width: 100%;
@@ -261,11 +262,9 @@ input[type="number"]::-webkit-outer-spin-button {
   z-index: 100;
   margin-left: auto;
   margin-right: auto;
-  background-color: #000;
 }
 
-#top-nav-bar > #pagetop {
-  position: absolute;
+.barra-superior > #pagetop {
   display: flex;
   align-items: center;
   gap: 10px;
@@ -278,6 +277,49 @@ input[type="number"]::-webkit-outer-spin-button {
   max-width: 1750px;
   margin-left: auto;
   margin-right: auto;
+  background-color: #000;
+}
+
+.barra-superior > #barraPontos {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0;
+  height: 30px;
+  width: 100%;
+  max-width: 1750px;
+  margin-left: auto;
+  margin-right: auto;
+  justify-items: center;
+  background-color: rgb(90, 123, 254);
+}
+
+.barra-superior label {
+  padding: 5px;
+  font-size: 25px;
+  font-family: NewsflashBB;
+  color: black;
+  font-weight: normal;
+}
+
+.barra-superior span {
+  padding: 5px;
+  font-size: 25px;
+  font-family: NewsflashBB;
+  color: white;
+  font-weight: normal;
+}
+
+.barra-superior > #barraPontos input {
+  background: none;
+  display: flex;
+  border: none;
+  color: white;
+  max-width: 40px;
+  text-align: center;
+  font-size: 18px;
+  border-bottom: 2px solid black;
 }
 
 #top-nav-bar::before {

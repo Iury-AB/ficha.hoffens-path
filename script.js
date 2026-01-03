@@ -1,4 +1,5 @@
 function exportarFicha() {
+  removerVantagens();
   const dados = {};
   document.querySelectorAll("input, textarea, select").forEach(el => {
     if (el.id) {
@@ -90,6 +91,7 @@ function carregarIndex() {
 }
 
 function salvarFicha() {
+  removerVantagens();
   const dados = {};
 
   document.querySelectorAll("input, textarea, select").forEach(el => {
@@ -309,6 +311,11 @@ function recalcularTudo() {
   calcularVida();
   calcularEstamina();
   contarVantagens();
+  calcularCustoHabilidades();
+  calcularCustoDefesas();
+  calcularCustoVantagens();
+  calcularCustoPericias();
+  calcularTotalPontos();
 }
 
 function filtrarTabela(tabela) {
@@ -612,4 +619,58 @@ function contarVantagens() {
   totalGeral.value = geral;
   totalPericia.value = pericia;
   totalSorte.value = sorte;
+}
+
+function calcularCustoHabilidades () {
+  let custoHabilidade = 0;
+  document.querySelectorAll(".habilidade").forEach(habilidade => {
+    const nivel = Number(habilidade.value) || 0;
+    custoHabilidade += nivel * 2;
+  });
+
+  document.getElementById("total-pontos-habilidades").value = custoHabilidade;
+}
+
+function calcularCustoDefesas () {
+  let custoDefesas = 0;
+  document.querySelectorAll(".defesa").forEach(defesa => {
+    const nivel = Number(defesa.value) || 0;
+    custoDefesas += nivel;
+  });
+
+  document.getElementById("total-pontos-defesas").value = custoDefesas;
+}
+
+function calcularCustoVantagens () {
+  let custoVantagens = 0;
+  document.querySelectorAll(".vantagem").forEach(vantagem => {
+    const nivel = Number(vantagem.value) || 0;
+    custoVantagens += nivel;
+  });
+
+  document.getElementById("total-pontos-vantagens").value = custoVantagens;
+}
+
+function calcularCustoPericias () {
+  let custoPericias = 0;
+  document.querySelectorAll(".pericia").forEach(pericia => {
+    const nivel = Number(pericia.value) || 0;
+    custoPericias += Math.ceil(nivel/2);
+  });
+
+  document.getElementById("total-pontos-pericias").value = custoPericias;
+}
+
+
+function calcularTotalPontos () {
+  let custoPontos = 0;
+
+  const pontosHab = Number(document.getElementById("total-pontos-habilidades").value);
+  const pontosVan = Number(document.getElementById("total-pontos-vantagens").value);
+  const pontosPer = Number(document.getElementById("total-pontos-pericias").value);
+  const pontosDef = Number(document.getElementById("total-pontos-defesas").value);
+
+  custoPontos = pontosHab + pontosVan + pontosDef + pontosPer;
+
+  document.getElementById("total-personagem").value = custoPontos;
 }

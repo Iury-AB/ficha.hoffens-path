@@ -7,7 +7,7 @@
 </head>
 <body>
 
-  <div id="top-nav-bar">
+  <div id="top-nav-bar" class="barra-superior">
     <div id="pagetop">
       <img src="img/hoffens_logo_cheia_invertida.png" style="width: 54px; height: 50px; padding: 10px;">
 
@@ -44,6 +44,27 @@
       <a href="https://docs.google.com/document/d/1O_l7hkSmeshOtU921rGBhUMwSorntJLCDy7jn23SQxI/edit?usp=sharing" class="botao-img" target="_blank">
         <img src="img/patch.png" alt="Hoffens Patch Note" title="Hoffens Patch Note" style="padding: 2px;">
       </a>
+    </div>
+
+    <div id="barraPontos">
+      <span>Total de Pontos do Personagem:</span>
+      <label for="total-pontos-habilidades">Habilidades:</label>
+      <input type="number" id="total-pontos-habilidades" readonly>
+
+      <label for="total-pontos-poderes">+ Poderes:</label>
+      <input type="number" id="total-pontos-poderes" readonly>
+
+      <label for="total-pontos-vantagens">+ Vantagens:</label>
+      <input type="number" id="total-pontos-vantagens" readonly>
+
+      <label for="total-pontos-pericias">+ Pericias:</label>
+      <input type="number" id="total-pontos-pericias" readonly>
+
+      <label for="total-pontos-defesas">+ Defesas:</label>
+      <input type="number" id="total-pontos-defesas" readonly>
+
+      <label for="total-personagem">=</label>
+      <input type="number" id="total-personagem" readonly>
     </div>
   </div>
 
@@ -121,7 +142,7 @@
           <h1>Habilidades</h1><br>
           <div class="hability stat">
             <label for="forca">Forca</label><br>
-            <input class="dependente" type="number" id="forca" oninput="calcularCarga()">
+            <input class="dependente habilidade" type="number" id="forca" oninput="calcularCarga()">
           </div>
 
           <div class="sub-hab">
@@ -213,7 +234,7 @@
 
           <div class="hability stat">
             <label for="agilidade">Agilidade</label><br>
-            <input class="dependente" type="number" id="agilidade" oninput="calcularDeslocamento()">
+            <input class="dependente habilidade" type="number" id="agilidade" oninput="calcularDeslocamento()">
           </div>
 
           <div class="sub-hab">
@@ -236,32 +257,32 @@
 
           <div class="hability stat">
             <label for="luta">Luta</label><br>
-            <input class="dependente" type="number" id="luta">
+            <input class="dependente habilidade" type="number" id="luta">
           </div>
 
           <div class="hability stat">
             <label for="vigor">Vigor</label><br>
-            <input class="dependente" type="number" id="vigor" oninput="calcularVida();calcularEstamina();">
+            <input class="dependente habilidade" type="number" id="vigor" oninput="calcularVida();calcularEstamina();">
           </div>
 
           <div class="hability stat">
             <label for="intelecto">Intelecto</label><br>
-            <input class="dependente" type="number" id="intelecto">
+            <input class="dependente habilidade" type="number" id="intelecto">
           </div>
 
           <div class="hability stat">
             <label for="prontidao">Prontidao</label><br>
-            <input class="dependente" type="number" id="prontidao">
+            <input class="dependente habilidade" type="number" id="prontidao">
           </div>
 
           <div class="hability stat">
             <label for="destreza">Destreza</label><br>
-            <input class="dependente" type="number" id="destreza">
+            <input class="dependente habilidade" type="number" id="destreza">
           </div>
 
           <div class="hability stat">
             <label for="presenca">Presenca</label><br>
-            <input class="dependente" type="number" id="presenca">
+            <input class="dependente habilidade" type="number" id="presenca">
           </div>
 
         </div>
@@ -283,7 +304,7 @@
               <input type="number" id="esquiva-total" readonly>
             </div>
             <div class="stat">
-              <input class="dependente" type="number" id="esquiva-grad">
+              <input class="dependente defesa" type="number" id="esquiva-grad">
             </div>
             <div class="stat">
               <input class="dependente" type="number" id="esquiva-outros">
@@ -299,7 +320,7 @@
               <input type="number" id="aparar-total" readonly>
             </div>
             <div class="stat">
-              <input class="dependente" type="number" id="aparar-grad">
+              <input class="dependente defesa" type="number" id="aparar-grad">
             </div>
             <div class="stat">
               <input class="dependente" type="number" id="aparar-outros">
@@ -315,7 +336,7 @@
               <input type="number" id="fortitude-total" readonly>
             </div>
             <div class="stat">
-              <input class="dependente" type="number" id="fortitude-grad">
+              <input class="dependente defesa" type="number" id="fortitude-grad">
             </div>
             <div class="stat">
               <input class="dependente" type="number" id="fortitude-outros">
@@ -347,7 +368,7 @@
               <input type="number" id="vontade-total" readonly>
             </div>
             <div class="stat">
-              <input class="dependente" type="number" id="vontade-grad">
+              <input class="dependente defesa" type="number" id="vontade-grad">
             </div>
             <div class="stat">
               <input class="dependente" type="number" id="vontade-outros">
@@ -489,7 +510,7 @@
               const novaLinha = document.createElement("div");
               novaLinha.className = "vantagens-linha";
               novaLinha.innerHTML = `
-                <input type="number" id="vantagem${contadorVantagens}-lvl" title="Nível da Vantagem" class="dependente">
+                <input type="number" id="vantagem${contadorVantagens}-lvl" title="Nível da Vantagem" class="dependente vantagem">
                 <select name="tipo" id="vantagem${contadorVantagens}-tipo" class="dependente tipo-vantagem">
                   <option value="nenhum"> — Tipo — </option>
                   <option value="classe">Classe</option>
@@ -597,7 +618,7 @@
             </td>
             <td>
               <div class="stat">
-                <input class="dependente" type="number" id="acrobacia-grad">
+                <input class="dependente pericia" type="number" id="acrobacia-grad">
               </div>
             </td>
             <td>
@@ -630,7 +651,7 @@
             </td>
             <td>
               <div class="stat">
-                <input class="dependente" type="number" id="atletismo-grad">
+                <input class="dependente pericia" type="number" id="atletismo-grad">
               </div>
             </td>
             <td>
@@ -673,9 +694,9 @@
             <td>
               <div class="stat">
                 <br>
-                <input class="dependente" type="number" id="ccc1-grad" style="margin: 2px;">
-                <input class="dependente" type="number" id="ccc2-grad" style="margin: 2px;">
-                <input class="dependente" type="number" id="ccc3-grad" style="margin: 2px;">
+                <input class="dependente pericia" type="number" id="ccc1-grad" style="margin: 2px;">
+                <input class="dependente pericia" type="number" id="ccc2-grad" style="margin: 2px;">
+                <input class="dependente pericia" type="number" id="ccc3-grad" style="margin: 2px;">
               </div>
             </td>
             <td>
@@ -714,7 +735,7 @@
             </td>
             <td>
               <div class="stat">
-                <input class="dependente" type="number" id="enganacao-grad">
+                <input class="dependente pericia" type="number" id="enganacao-grad">
               </div>
             </td>
             <td>
@@ -760,10 +781,10 @@
             <td>
               <div class="stat">
                 <br>
-                <input class="dependente" type="number" id="especialidade1-grad" style="margin: 2px;">
-                <input class="dependente" type="number" id="especialidade2-grad" style="margin: 2px;">
-                <input class="dependente" type="number" id="especialidade3-grad" style="margin: 2px;">
-                <input class="dependente" type="number" id="especialidade4-grad" style="margin: 2px;">
+                <input class="dependente pericia" type="number" id="especialidade1-grad" style="margin: 2px;">
+                <input class="dependente pericia" type="number" id="especialidade2-grad" style="margin: 2px;">
+                <input class="dependente pericia" type="number" id="especialidade3-grad" style="margin: 2px;">
+                <input class="dependente pericia" type="number" id="especialidade4-grad" style="margin: 2px;">
               </div>
             </td>
             <td>
@@ -804,7 +825,7 @@
             </td>
             <td>
               <div class="stat">
-                <input class="dependente" type="number" id="furtividade-grad">
+                <input class="dependente pericia" type="number" id="furtividade-grad">
               </div>
             </td>
             <td>
@@ -837,7 +858,7 @@
             </td>
             <td>
               <div class="stat">
-                <input class="dependente" type="number" id="intimidacao-grad">
+                <input class="dependente pericia" type="number" id="intimidacao-grad">
               </div>
             </td>
             <td>
@@ -870,7 +891,7 @@
             </td>
             <td>
               <div class="stat">
-                <input class="dependente" type="number" id="intuicao-grad">
+                <input class="dependente pericia" type="number" id="intuicao-grad">
               </div>
             </td>
             <td>
@@ -903,7 +924,7 @@
             </td>
             <td>
               <div class="stat">
-                <input class="dependente" type="number" id="investigacao-grad">
+                <input class="dependente pericia" type="number" id="investigacao-grad">
               </div>
             </td>
             <td>
@@ -936,7 +957,7 @@
             </td>
             <td>
               <div class="stat">
-                <input class="dependente" type="number" id="percepcao-grad">
+                <input class="dependente pericia" type="number" id="percepcao-grad">
               </div>
             </td>
             <td>
@@ -979,9 +1000,9 @@
             <td>
               <div class="stat">
                 <br>
-                <input class="dependente" type="number" id="cad1-grad" style="margin: 2px;">
-                <input class="dependente" type="number" id="cad2-grad" style="margin: 2px;">
-                <input class="dependente" type="number" id="cad3-grad" style="margin: 2px;">
+                <input class="dependente pericia" type="number" id="cad1-grad" style="margin: 2px;">
+                <input class="dependente pericia" type="number" id="cad2-grad" style="margin: 2px;">
+                <input class="dependente pericia" type="number" id="cad3-grad" style="margin: 2px;">
               </div>
             </td>
             <td>
@@ -1020,7 +1041,7 @@
             </td>
             <td>
               <div class="stat">
-                <input class="dependente" type="number" id="persuasao-grad">
+                <input class="dependente pericia" type="number" id="persuasao-grad">
               </div>
             </td>
             <td>
@@ -1053,7 +1074,7 @@
             </td>
             <td>
               <div class="stat">
-                <input class="dependente" type="number" id="prestidigitacao-grad">
+                <input class="dependente pericia" type="number" id="prestidigitacao-grad">
               </div>
             </td>
             <td>
@@ -1086,7 +1107,7 @@
             </td>
             <td>
               <div class="stat">
-                <input class="dependente" type="number" id="tecnologia-grad">
+                <input class="dependente pericia" type="number" id="tecnologia-grad">
               </div>
             </td>
             <td>
@@ -1119,7 +1140,7 @@
             </td>
             <td>
               <div class="stat">
-                <input class="dependente" type="number" id="tratamento-grad">
+                <input class="dependente pericia" type="number" id="tratamento-grad">
               </div>
             </td>
             <td>
@@ -1152,7 +1173,7 @@
             </td>
             <td>
               <div class="stat">
-                <input class="dependente" type="number" id="veiculos-grad">
+                <input class="dependente pericia" type="number" id="veiculos-grad">
               </div>
             </td>
             <td>
@@ -1169,8 +1190,6 @@
           
         </table>
       </div>
-
-      
 
     </div>
   </div>
