@@ -467,9 +467,17 @@
 
           <div id="lista-vantagens">
           </div>
-          <button onclick="adicionarVantagem();" class="botao-img" id="addVantagem" title="Adicionar Vantagem" style="justify-self: center;">
-            <img src="img/adicionar.png" alt="Adicionar Vantagem">
-          </button>
+
+          <div style="justify-self: center;">
+              <button onclick="adicionarVantagem();" class="botao-img" id="addVantagem" title="Adicionar Vantagem">
+              <img src="img/adicionar.png" alt="Adicionar Vantagem">
+            </button>
+
+            <button onclick="removerVantagens();" class="botao-img" id="remVantagem" title="Remover Vantagens Vazias">
+              <img src="img/remover.png" alt="Remover Vantagem">
+            </button>
+          </div>
+
           <script>
             let contadorVantagens = 0;
 
@@ -490,14 +498,27 @@
                   <option value="pericia">Pericia</option>
                   <option value="sorte">Sorte</option>
                 </select>
-                <input type="text" id="vantagem${contadorVantagens}-nome" title="Vantagem ${contadorVantagens}">
+                <input type="text" id="vantagem${contadorVantagens}-nome" title="Vantagem ${contadorVantagens}" class="nome-vantagem">
               `;
                 
               listaVantagens.appendChild(novaLinha);
             }
             
+            function removerVantagens() {
+              document.querySelectorAll(".nome-vantagem").forEach(vantagem => {
+                if(vantagem.value.trim() === "" ) {
+                  const linha = vantagem.closest(".vantagens-linha");
+                  if (linha) {
+                    linha.remove();
+                  }
+                }
+              });
+
+              recalcularTudo();
+            }
           </script>
-        </div>
+        
+      </div>
 
       </div>
 
