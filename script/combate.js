@@ -54,147 +54,68 @@ function calculoEsforcoExtra() {
 }
 
 function determinarRolagemDano(thisDano) {
-  var rolagem=1;
+  if (thisDano < 0 || thisDano > 20) {
+    return "---";
+  }
 
-  if (thisDano == 0) {
-    rolagem = 1;
-  }
-  else if (thisDano == 1){
-    rolagem = "1d4+1";
-  }
-  else if (thisDano == 2){
-    rolagem = "2d4+2";
-  }
-  else if (thisDano == 3){
-    rolagem = "3d4+3";
-  }
-  else if (thisDano == 4){
-    rolagem = "3d6+4";
-  }
-  else if (thisDano == 5){
-    rolagem = "4d6+5";
-  }
-  else if (thisDano == 6){
-    rolagem = "4d8+6";
-  }
-  else if (thisDano == 7){
-    rolagem = "5d8+7";
-  }
-  else if (thisDano == 8){
-    rolagem = "5d10+8";
-  }
-  else if (thisDano == 9){
-    rolagem = "6d10+9";
-  }
-  else if (thisDano == 10){
-    rolagem = "6d12+10";
-  }
-  else if (thisDano == 11){
-    rolagem = "7d12+11";
-  }
-  else if (thisDano == 12){
-    rolagem = "8d12+12";
-  }
-  else if (thisDano == 13){
-    rolagem = "9d12+13";
-  }
-  else if (thisDano == 14){
-    rolagem = "10d12+14";
-  }
-  else if (thisDano == 15){
-    rolagem = "7d20+15";
-  }
-  else if (thisDano == 16){
-    rolagem = "8d20+16";
-  }
-  else if (thisDano == 17){
-    rolagem = "9d20+17";
-  }
-  else if (thisDano == 18){
-    rolagem = "10d20+18";
-  }
-  else if (thisDano == 19){
-    rolagem = "11d20+19";
-  }
-  else if (thisDano == 20){
-    rolagem = "12d20+20";
-  }
-  else {
-    rolagem = "---";
-  }
-  return rolagem;
+  return listaDano[thisDano];
 }
 
-function determinarRolagemCura(thisCura) {
-  var rolagem=1;
+const listaDano = {
+  0:  "1",
+  1:  "1d4+1",
+  2:  "2d4+2",
+  3:  "3d4+3",
+  4:  "3d6+4",
+  5:  "4d6+5",
+  6:  "4d8+6",
+  7:  "5d8+7",
+  8:  "5d10+8",
+  9:  "6d10+9",
+  10: "6d12+10",
+  11: "7d12+11",
+  12: "8d12+12",
+  13: "9d12+13",
+  14: "10d12+14",
+  15: "7d20+15",
+  16: "8d20+16",
+  17: "9d20+17",
+  18: "10d20+18",
+  19: "11d20+19",
+  20: "12d20+20"
+};
 
-  if (thisCura == 0) {
-    rolagem = 1;
+function determinarRolagemCura(thisCura) {
+  if (thisCura < 0 || thisCura > 20) {
+    return "---";
   }
-  else if (thisCura == 1){
-    rolagem = "1d4";
-  }
-  else if (thisCura == 2){
-    rolagem = "2d4";
-  }
-  else if (thisCura == 3){
-    rolagem = "3d4";
-  }
-  else if (thisCura == 4){
-    rolagem = "3d6";
-  }
-  else if (thisCura == 5){
-    rolagem = "4d6";
-  }
-  else if (thisCura == 6){
-    rolagem = "4d8";
-  }
-  else if (thisCura == 7){
-    rolagem = "5d8";
-  }
-  else if (thisCura == 8){
-    rolagem = "5d10";
-  }
-  else if (thisCura == 9){
-    rolagem = "6d10";
-  }
-  else if (thisCura == 10){
-    rolagem = "6d12";
-  }
-  else if (thisCura == 11){
-    rolagem = "7d12";
-  }
-  else if (thisCura == 12){
-    rolagem = "8d12";
-  }
-  else if (thisCura == 13){
-    rolagem = "9d12";
-  }
-  else if (thisCura == 14){
-    rolagem = "10d12";
-  }
-  else if (thisCura == 15){
-    rolagem = "7d20";
-  }
-  else if (thisCura == 16){
-    rolagem = "8d20";
-  }
-  else if (thisCura == 17){
-    rolagem = "9d20";
-  }
-  else if (thisCura == 18){
-    rolagem = "10d20";
-  }
-  else if (thisCura == 19){
-    rolagem = "11d20";
-  }
-  else if (thisCura == 20){
-    rolagem = "12d20";
-  }
-  else {
-    rolagem = "---";
-  }
-  return rolagem;
+
+  return listaCura[thisCura];
+}
+
+const listaCura = {
+  0:  "1",
+  1:  "1d4",
+  2:  "2d4",
+  3:  "3d4",
+  4:  "3d6",
+  5:  "4d6",
+  6:  "4d8",
+  7:  "5d8",
+  8:  "5d10",
+  9:  "6d10",
+  10: "6d12",
+  11: "7d12",
+  12: "8d12",
+  13: "9d12",
+  14: "10d12",
+  15: "7d20",
+  16: "8d20",
+  17: "9d20",
+  18: "10d20",
+  19: "11d20",
+  20: "12d20"	
+
 }
 
 function determinarDt(nivel, crit) {
