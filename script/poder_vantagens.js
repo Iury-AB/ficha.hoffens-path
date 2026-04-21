@@ -509,7 +509,7 @@ function custoPoder (poder) {
   if(!poderEl) return 0;
   
   const efeitoPrincipal = document.getElementById(`efeito-${poder}-1`);
-  if (!efeitoPrincipal) return;
+  if (!efeitoPrincipal) return 0;
 
   const custoEfeitoPrincipal = efeitoPrincipal.querySelector("input[name='pontos-efeito']");
   custoEfeitoPrincipal.value = custoEfeito(poder, 1, 0,'efeito');
@@ -528,7 +528,7 @@ function custoPoder (poder) {
 function calcularCustoPoderes () {
   let custoPoderes = 0;
   for (let poder = 1; poder <= contadorPoderes; poder++) {
-    const custo = custoPoder(poder);
+    const custo = custoPoder(poder) || 0;
     document.getElementById(`pontos-poder-${poder}`).value = custo;
     custoPoderes += custo;
   }
