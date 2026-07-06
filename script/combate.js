@@ -295,89 +295,132 @@ function removerAtaques() {
   recalcularTudo();
 }
 
-function atribuirDescricaoCondicao() {
-  const condicao = document.getElementById("condicoes-personagem").value;
+const descCondicoes = {
+  "normal": " não está sob o efeito de nenhuma condição, podendo agir normalmente.",
+  "atordoado": " não pode executar ações, nem mesmo ações livres. Realize um teste ao final de cada turno para remover a condição.",
+
+  "compelido": " está limitado a ações livres e a uma única ação padrão por turno, com todas as ações sendo escolhidas pelo personagem que o controla. Realize um teste ao final de cada turno para remover a condição.",
+
+  "controlado": " não tem vontade própria; suas ações em cada turno são ditadas pelo personagem que o controla. É necessário ajuda externa para remover a condição.",
+
+  "desabilitado": " sofre uma penalidade de circunstância de -5 em todos os testes. Realize um teste ao final de cada turno para remover a condição.",
+
+  "debilitado": " tem uma ou mais das habilidades reduzida para abaixo de -5. Você sofre efeitos mais sérios que apenas uma penalidade.\n - Força, Agilidade ou Destreza debilitadas significam que o personagem entra em colapso: fica indefeso, imobilizado e atordoado (embora continue consciente).\n - Vigor debilitado significa que o personagem está morrendo, e que sofre um modificador de -5 em testes de Fortitude para evitar a morte.\n - Luta debilitada significa que o personagem está tonto e indefeso, e não pode realizar ataques corpo-a-corpo.\n - Intelecto, Prontidão e Presença debilitados significam que o personagem está desatento.\nCaso se aplique à(s) mesma(s) característica(s), debilitado se sobrepõe a desabilitado.",
+
+  "desatento": " tem um (ou mais) dos sentidos completamente inutilizado, está incapaz de interagir ou de fazer testes de Percepção ou executar qualquer ação baseada nele(s). É necessário ajuda externa para remover a condição.",
+
+  "fatigado": " se move a metade de seu movimento normal. Pode se recuperar da condição fatigado com uma hora de descanso ou com a ação Recuperar-se.",
+
+  "imovel": " não pode se mover do lugar em que se encontra, embora ainda seja capaz de executar ações. Realize um teste ao final de cada turno para remover a condição.",
+
+  "impedido": " se move a metade de seu movimento normal.  Realize um teste ao final de cada turno para remover a condição.",
+
+  "indefeso": " está com suas defesas ativas igual a 0. Atacantes podem te acertar com testes de rotina. Se o atacante preferir fazer um teste de ataque normal, todos os acertos serão tratados como acertos críticos. Realize um teste ao final de cada turno para remover a condição.",
+  
+  "prejudicado": " sofre uma penalidade de circunstância de -2 em todos os testes. Realize um teste ao final de cada turno para remover a condição. Caso se aplique à(s) mesma(s) característica(s), desabilitado se sobrepõe a prejudicado.",
+
+  "tonto": " é incapaz de realizar mais do que uma única ação padrão e ações livres por turno. Realize um teste ao final de cada turno para remover a condição.",
+
+  "transformado": " teve alguma ou todas as suas características alteradas, desde a aparência do personagem a uma mudança completa das graduações de suas características ou a adição de outras. É necessário ajuda externa para remover a condição.",
+
+  "vulneravel": " têm sua habilidade de se defender limitada, dividindo suas defesas ativas pela metade. Realize um teste ao final de cada turno para remover a condição.",
+
+  "adormecido": " está indefeso (defesas ativas zeradas), atordoado (não pode executar ações) e desatento (sentidos inutilizados). É necessário um teste de Percepção com três ou mais graus de sucesso para o personagem ouvir e acordar, removendo todas estas condições. Qualquer movimento brusco ou efeito que permita um teste de salvamento acorda o personagem.",
+
+  "amarrado": " está indefeso (defezas ativas zeradas), imóvel e prejudicado (penalidade de -2 em testes). É necessário uma ação de movimento com um teste de Atletismo ou Acrobacia contra o teste de rotina de Força ou efeito de agarrar do seu oponente; em caso de sucesso, você ainda pode se mover normalmente, mas caso falhe, permanece agarrado.",
+
+  "caido": " sofre uma penalidade de -5 em testes de combate corpo-a-corpo. Os oponentes ganham um bônus de +5 em testes de combate corpo-a-corpo, mas sofrem uma penalidade de -5 em testes de ataque à distância; além disso, seu deslocamente é reduzido pela metade. Ficar de pé é uma ação de movimento.",
+
+  "cego": " está impedido (metade do deslocamento), visualmente desatento e vulnerável (metade das defesas ativas), e pode estar prejudicado (penalidade de -2) ou desabilitado (penalidade de -5) para atividades em que a visão é um fator. É necessário ajuda externa para remover a condição.",
+
+  "exausto": " está prejudicado (penalidade de -2 em testes) e impedido (metade do deslocamento). Pode se recuperar da condição exausto com uma hora de descanso em um lugar confortável ou com a ação Recuperar-se, que troca Exausto por Fatigado.",
+
+  "incapacitado": " está indefeso (defesas zeradas), atordoado (incapaz de agir), desatento (sentidos inutilizados) e caído (a não ser que uma força externa o mantenha de pé). É necessário ajuda externa para remover a condição.",
+
+  "morrendo": " está incapacitado (indefeso, atordoado e desatento) e recebe uma contagem regressiva de três turnos seus. Ao se completarem esses 3 turnos e ainda estiver com essa condição, morre definitivamente. Remover a condição morrendo exige um teste de Tratamento (ou do poder Cura) contra a DT 30.",
+
+  "paralisado": " está indefeso (defesas zeradas), imóvel e fisicamente atordoado (incapaz de agir), mas se mantém consciente e capaz de executar ações puramente mentais, que não envolvam qualquer tipo de movimento físico. É necessário ajuda externa para remover a condição.",
+
+  "restrito": " está impedido (metade do deslocamento) e vulnerável (metade das defesas ativas). É necessário uma ação de movimento com um teste de Atletismo ou Acrobacia contra o teste de rotina de Força ou efeito de agarrar do seu oponente; em caso de sucesso, você ainda pode se mover normalmente, mas caso falhe, permanece restrito.",
+
+  "surdo": " não ouve, concedendo cobertura auditiva total contra você. Isso pode permitir ataques de surpresa contra o personagem desatento. É necessário ajuda externa para remover a condição.",
+
+  "surpreso": " está atordoado (incapaz de agir) e vulnerável (metade das defesas ativas) por uma rodada, após isso ela é removida sem a necessidade de testes. Esquiva Fabulosa garante imunidade contra essa condição.",
+
+  "transe": " está atordoado (incapaz de agir). Qualquer ameaça óbvia quebra o transe, um teste de perícias de interação de um aliado também pode remover essa condição."
+}
+
+function atribuirDescricaoCondicao(condicao) {
   var nomePersonagem = document.getElementById("personagem").value || "Personagem";
   nomePersonagem = nomePersonagem.split(" ")[0];
-  var descricao = "";
-  if(condicao == "normal") {
-    descricao = nomePersonagem + " não está sob o efeito de nenhuma condição, podendo agir normalmente.";
-  }
-  else if(condicao == "atordoado") {
-    descricao = nomePersonagem + " não pode executar ações, nem mesmo ações livres. Realize um teste ao final de cada turno para remover a condição.";
-  }
-  else if(condicao == "compelido") {
-    descricao = nomePersonagem + " está limitado a ações livres e a uma única ação padrão por turno, com todas as ações sendo escolhidas pelo personagem que o controla. Realize um teste ao final de cada turno para remover a condição.";
-  }
-  else if(condicao == "controlado") {
-    descricao = nomePersonagem + " não tem vontade própria; suas ações em cada turno são ditadas pelo personagem que o controla. É necessário ajuda externa para remover a condição.";
-  }
-  else if(condicao == "desabilitado") {
-    descricao = nomePersonagem + " sofre uma penalidade de circunstância de -5 em todos os testes. Realize um teste ao final de cada turno para remover a condição.";
-  }
-  else if(condicao == "desatento") {
-    descricao = "Um (ou mais) dos sentidos de " + nomePersonagem + " está completamente inutilizado, incapaz de interagir ou de fazer testes de Percepção ou executar qualquer ação baseada nele(s). É necessário ajuda externa para remover a condição.";
-  }
-  else if(condicao == "fatigado") {
-    descricao = nomePersonagem + " se move a metade de seu movimento normal. Pode se recuperar da condição fatigado com uma hora de descanso ou com a ação Recuperar-se.";
-  }
-  else if(condicao == "imovel") {
-    descricao = nomePersonagem + " não pode se mover do lugar em que se encontra, embora ainda seja capazes de executar ações. Realize um teste ao final de cada turno para remover a condição.";
-  }
-  else if(condicao == "impedido") {
-    descricao = nomePersonagem + " se move a metade de seu movimento normal.  Realize um teste ao final de cada turno para remover a condição.";
-  }
-  else if(condicao == "indefeso") {
-    descricao = "O bônus das defesas ativas de " + nomePersonagem + " é 0. Atacantes podem te com testes de rotina. Se o atacante preferir fazer um teste de ataque normal, todos os acertos serão tratados como acertos críticos. Realize um teste ao final de cada turno para remover a condição.";
-  }
-  else if(condicao == "prejudicado") {
-    descricao = nomePersonagem + " sofre uma penalidade de circunstância de -2 em todos os testes. Realize um teste ao final de cada turno para remover a condição.";
-  }
-  else if(condicao == "tonto") {
-    descricao = nomePersonagem + " é incapaz de realizar mais do que uma única ação padrão e ações livres por turno. Realize um teste ao final de cada turno para remover a condição.";
-  }
-  else if(condicao == "transformado") {
-    descricao = nomePersonagem + " teve alguma ou todas as suas características alteradas, desde a aparência do personagem a uma mudança completa das graduações de suas características ou a adição de outras. É necessário ajuda externa para remover a condição.";
-  }
-  else if(condicao == "vulneravel") {
-    descricao = nomePersonagem + " têm sua habilidade de se defender limitada, dividindo suas defesas ativas pela metade. Realize um teste ao final de cada turno para remover a condição.";
-  }
-  else if(condicao == "adormecido") {
-    descricao = nomePersonagem + " está indefeso (defesas ativas zeradas), atordoado (não pode executar ações) e desatento (sentidos inutilizados). É necessário um teste de Percepção com três ou mais graus de sucesso para o personagem ouvir e acordar, removendo todas estas condições. Qualquer movimento brusco ou efeito que permita um teste de salvamento acorda o personagem.";
-  }
-  else if(condicao == "amarrado") {
-    descricao = nomePersonagem + " está indefeso (defezas ativas zeradas), imóvel e prejudicado (penalidade de -2 em testes). É necessário uma ação de movimento com um teste de Atletismo ou Acrobacia contra o teste de rotina de Força ou efeito de agarrar do seu oponente; em caso de sucesso, você ainda pode se mover normalmente, mas caso falhe, permanece agarrado.";
-  }
-  else if(condicao == "caido") {
-    descricao = nomePersonagem + " sofre uma penalidade de -5 em testes de combate corpo-a-corpo. Os oponentes ganham um bônus de +5 em testes de combate corpo-a-corpo, mas sofrem uma penalidade de -5 em testes de ataque à distância; além disso, seu deslocamente é reduzido pela metade. Ficar de pé é uma ação de movimento.";
-  }
-  else if(condicao == "cego") {
-    descricao = nomePersonagem + " está impedido (metade do deslocamento), visualmente desatento e vulnerável (metade das defesas ativas), e pode estar prejudicado (penalidade de -2) ou desabilitado (penalidade de -5) para atividades em que a visão é um fator. É necessário ajuda externa para remover a condição.";
-  }
-  else if(condicao == "exausto") {
-    descricao = nomePersonagem + " está prejudicado (penalidade de -2 em testes) e impedido (metade do deslocamento). Pode se recuperar da condição exausto com uma hora de descanso em um lugar confortável ou com a ação Recuperar-se, que troca Exausto por Fatigado.";
-  }
-  else if(condicao == "incapacitado") {
-    descricao = nomePersonagem + " está indefeso (defesas zeradas), atordoado (incapaz de agir), desatento (sentidos inutilizados) e caído (a não ser que uma força externa o mantenha de pé). É necessário ajuda externa para remover a condição.";
-  }
-  else if(condicao == "morrendo") {
-    descricao = nomePersonagem + " está incapacitado (indefeso, atordoado e desatento) e recebe uma contagem regressiva de três turnos seus. Ao se completarem esses 3 turnos e ainda estiver com essa condição, morre definitivamente. Remover a condição morrendo exige um teste de Tratamento (ou do poder Cura) contra a DT 30.";
-  }
-  else if(condicao == "paralisado") {
-    descricao = nomePersonagem + " está indefeso (defesas zeradas), imóvel e fisicamente atordoado (incapaz de agir), mas se mantém consciente e capaz de executar ações puramente mentais, que não envolvam qualquer tipo de movimento físico. É necessário ajuda externa para remover a condição.";
-  }
-  else if(condicao == "restrito") {
-    descricao = nomePersonagem + " está impedido (metade do deslocamento) e vulnerável (metade das defesas ativas). É necessário uma ação de movimento com um teste de Atletismo ou Acrobacia contra o teste de rotina de Força ou efeito de agarrar do seu oponente; em caso de sucesso, você ainda pode se mover normalmente, mas caso falhe, permanece restrito.";
-  }
-  else if(condicao == "surdo") {
-    descricao = nomePersonagem + " não ouve, concedendo cobertura auditiva total contra você. Isso pode permitir ataques de surpresa contra o personagem desatento. É necessário ajuda externa para remover a condição.";
-  }
-  else if(condicao == "surpreso") {
-    descricao = nomePersonagem + " está atordoado (incapaz de agir) e vulnerável (metade das defesas ativas) por uma rodada, após isso ela é removida sem a necessidade de testes. Esquiva Fabulosa garante imunidade contra essa condição.";
-  }
-  else if(condicao == "") {
-    descricao = nomePersonagem + " está atordoado (incapaz de agir). Qualquer ameaça óbvia quebra o transe, um teste de perícias de interação de um aliado também pode remover essa condição.";
+
+  var descricao = nomePersonagem + descCondicoes[condicao];
+  
+  document.getElementById("descricao-condicao").value = descricao;
+}
+
+function adicionarCondicaoSelect() {
+  const selectCondicao = document.getElementById("condicoes-personagem");
+  const condicao = selectCondicao.selectedOptions[0].text
+  const condicaoValue = selectCondicao.value;
+
+  adicionarCondicao(condicaoValue, condicao);
+}
+
+function adicionarCondicao(id, nome) {
+  // Verificar se a condicao já está atribuída
+  if(document.getElementById(id)){
+    return
   }
 
-  document.getElementById("descricao-condicao").value = descricao;
+  const listaCondicoes = document.getElementById("lista-condicoes");
+
+  // Se a condição a ser adicionada for "normal", as demais são removidas
+  if(id == "normal") {
+    const condicoes = document.querySelectorAll(".condicao");
+    condicoes.forEach(condicao => {
+      condicao.remove();
+    });
+  }
+
+  // Algumas condições se sobrepõe a outras
+  const sobreposicao = {
+    "controlado": ["compelido"],
+    "imovel": ["impedido"],
+    "atordoado": ["tonto"],
+    "indefeso": ["vulneravel"],
+    "adormecido": ["indefeso", "atordoado", "caido", "impedido"] ,
+    "amarrado": ["indefeso", "vulneravel", "imovel", "impedido", "prejudicado"],
+    "caido": ["impedido"],
+    "cego": ["impedido", "vulneravel"],
+    "exausto": ["prejudicado", "impedido", "fatigado"],
+    "incapacitado": ["indefeso", "atordoado", "tonto", "caido", "impedido"],
+    "morrendo": ["incapacitado","indefeso", "atordoado", "tonto", "caido", "impedido"],
+    "paralisado": ["indefeso", "vulneravel", "imovel", "impedido", "atordoado", "tonto"],
+    "restrito": ["impedido", "vulneravel"],
+    "transe": ["atordoado"]
+  };
+
+  const sobrepostas = sobreposicao[id];
+
+  if (sobrepostas) {
+  sobrepostas.forEach(alvo => {
+    document.getElementById(alvo)?.remove();
+  });
+}
+
+  listaCondicoes.innerHTML = listaCondicoes.innerHTML + `
+  <div class="condicao" id="${id}" onclick="atribuirDescricaoCondicao('${id}')">
+    ${nome}
+    <button class="remover-condicao" onclick="removerCondicao('${id}')">X</button>
+  </div>
+  `
+}
+
+function removerCondicao(condicao) {
+  const condicaoEl = document.getElementById(condicao);
+  
+  if(condicaoEl) {
+    condicaoEl.remove();
+  }
 }

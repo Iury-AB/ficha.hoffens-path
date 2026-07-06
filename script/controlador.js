@@ -92,7 +92,6 @@ function recalcularTudo() {
   calculoEsforcoExtra();
   atribuirRolagemDano("nivel-dano", "rolagem-dano");
   ajustaRolagens();
-  atribuirDescricaoCondicao();
 }
 
 function atualizarBarraCorrupcao(corrupcao, max) {

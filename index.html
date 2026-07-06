@@ -1465,12 +1465,13 @@
         <div class="linha-combate">
           <label for="">Condições</label>
 
-          <select name="condicoes" id="condicoes-personagem" class="campo-editavel dependente span-2" style="padding: 5px; font-size: 15px;" onchange="atribuirDescricaoCondicao()">
+          <select name="condicoes" id="condicoes-personagem" class="campo-editavel dependente span-2" onchange="adicionarCondicaoSelect();atribuirDescricaoCondicao(this.value)">
             <optgroup label="-----Condições Simples-----">
               <option value="normal">Normal</option>
               <option value="atordoado">Atordoado</option>
               <option value="compelido">Compelido</option>
               <option value="controlado">Controlado</option>
+              <option value="debilitado">Debilitado</option>
               <option value="desabilitado">Desabilitado</option>
               <option value="desatento">Desatento</option>
               <option value="fatigado">Fatigado</option>
@@ -1498,8 +1499,9 @@
               <option value="transe">Transe</option>
             </optgroup>
           </select>
-          <textarea id="descricao-condicao" class="span-3" readonly></textarea>
         </div>
+        <div id="lista-condicoes" class="span-3"></div>
+        <textarea id="descricao-condicao" class="span-3" placeholder="Ao selecionar uma condição acima, ela será aplicada ao personagem. Clique na aba da condição que aparece após ser aplicada para ver a descrição dela." readonly></textarea>
       </div>
 
       <div id="acao-combate">
@@ -1532,9 +1534,9 @@
           <input type="checkbox" id="critico-teste" onchange="destacaCritico('dano-teste')" class="check-critico">
           <label for="critico-teste" class="critical-mark">Crit</label>
         </div>
-
+        <h1 style="margin-left: 10px;">Ataques</h1>
         <div class="lista-ataques">
-          <h1>Ataques</h1>
+          
         </div>
 
         <div style="justify-self: center;">
