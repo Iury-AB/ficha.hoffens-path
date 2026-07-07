@@ -1403,7 +1403,6 @@ textarea::placeholder {
   right: 0%;
   height: 20px;
   margin: 2px;
-  pointer-events: all;
   opacity: 0%;
   cursor: pointer;
   background-color: var(--cor-secundaria);

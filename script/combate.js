@@ -351,6 +351,8 @@ const descCondicoes = {
 }
 
 function atribuirDescricaoCondicao(condicao) {
+  if(!document.getElementById(condicao)) return;
+
   var nomePersonagem = document.getElementById("personagem").value || "Personagem";
   nomePersonagem = nomePersonagem.split(" ")[0];
 
@@ -394,7 +396,7 @@ function adicionarCondicao(id, nome) {
     "caido": ["impedido"],
     "cego": ["impedido", "vulneravel"],
     "exausto": ["prejudicado", "impedido", "fatigado"],
-    "incapacitado": ["indefeso", "atordoado", "tonto", "caido", "impedido"],
+    "incapacitado": ["indefeso", "atordoado", "tonto", "caido", "impedido", "fatigado", "exausto"],
     "morrendo": ["incapacitado","indefeso", "atordoado", "tonto", "caido", "impedido"],
     "paralisado": ["indefeso", "vulneravel", "imovel", "impedido", "atordoado", "tonto"],
     "restrito": ["impedido", "vulneravel"],
@@ -423,4 +425,6 @@ function removerCondicao(condicao) {
   if(condicaoEl) {
     condicaoEl.remove();
   }
+
+  document.getElementById("descricao-condicao").value = "";
 }

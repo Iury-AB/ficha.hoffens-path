@@ -1,5 +1,8 @@
+let bloqueiaRecalculo = false;
 
 document.addEventListener("input", function (e) {
+  if (bloqueiaRecalculo) return;
+  
   if (e.target.classList.contains("dependente")) {
     recalcularTudo();
   }

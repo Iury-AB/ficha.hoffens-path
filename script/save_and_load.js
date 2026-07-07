@@ -71,8 +71,14 @@ function carregarFicha(nome) {
     limparFicha();
     return;
   }
+
+  bloqueiaRecalculo = true;
+
   const dados = JSON.parse(localStorage.getItem(`ficha:${nome}`));
-  if (!dados) return;
+  if (!dados) {
+    bloqueiaRecalculo = false;
+    return;
+  }
 
   const iconPersonagem = localStorage.getItem(`icon:${nome}`);
   if(iconPersonagem) {
@@ -177,6 +183,8 @@ function carregarFicha(nome) {
 
   document.getElementById("pagina").innerHTML = nome;
   document.getElementById("listaFichas").value = nome;
+  
+  bloqueiaRecalculo = false;
   recalcularTudo();
 }
 

@@ -1,4 +1,7 @@
 function recalcularTudo() {
+  if (bloqueiaRecalculo) return; 
+  bloqueiaRecalculo = true;
+
   filtrarTabela("skills-table");
   calcularTotalAtributo("agilidade","esquiva-grad","esquiva-total","esquiva-outros");
   calcularTotalAtributo("luta","aparar-grad","aparar-total","aparar-outros");
@@ -92,6 +95,8 @@ function recalcularTudo() {
   calculoEsforcoExtra();
   atribuirRolagemDano("nivel-dano", "rolagem-dano");
   ajustaRolagens();
+  checkEstaminaVida();
+  bloqueiaRecalculo = false;
 }
 
 function atualizarBarraCorrupcao(corrupcao, max) {
@@ -191,7 +196,6 @@ function calcularCustoPericias () {
   document.getElementById("total-pontos-pericias").value = custoPericias;
 }
 
-
 function calcularTotalPontos () {
   let custoPontos = 0;
 
@@ -213,4 +217,24 @@ function calcularTotalPontos () {
   var pontosRestantes = Number(pontosTotal.value) - Number(totalPersonagem.value);
 
   document.getElementById("restando-pontos").value = pontosRestantes;
+}
+
+function checkEstaminaVida() {
+  const estaminaAtual = Number(document.getElementById("estamina-combate").value) || 0;
+  const estaminaTotal = Number(document.getElementById("estamina").value) || 0;
+  const vidaAtual = Number(document.getElementById("vida-combate").value) || 0;
+  const vidaTotal = Number(document.getElementById("vida").value) || 0;
+  
+  if(estaminaAtual <= 0.2*estaminaTotal && estaminaAtual > 0) {
+    adicionarCondicao("fatigado", "Fatigado");
+    atribuirDescricaoCondicao("fatigado");
+  }
+  else if(estaminaAtual <= 0 && estaminaAtual > -10) {
+    adicionarCondicao("exausto", "Exausto");
+    atribuirDescricaoCondicao("exausto");
+  }
+  else if(estaminaAtual <= -10) {
+    adicionarCondicao("incapacitado", "Incapacitado");
+    atribuirDescricaoCondicao("incapacitado");
+  }
 }
