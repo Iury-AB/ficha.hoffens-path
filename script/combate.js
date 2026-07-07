@@ -383,6 +383,9 @@ function adicionarCondicao(id, nome) {
     condicoes.forEach(condicao => {
       condicao.remove();
     });
+  } else if (document.getElementById("normal")) {
+    // Se a condição a ser adicionada não for "normal", a condição "normal" é removida
+    document.getElementById("normal").remove();
   }
 
   // Algumas condições se sobrepõe a outras
@@ -395,9 +398,10 @@ function adicionarCondicao(id, nome) {
     "amarrado": ["indefeso", "vulneravel", "imovel", "impedido", "prejudicado"],
     "caido": ["impedido"],
     "cego": ["impedido", "vulneravel"],
-    "exausto": ["prejudicado", "impedido", "fatigado"],
+    "fatigado": ["exausto", "incapacitado"],
+    "exausto": ["prejudicado", "impedido", "fatigado", "incapacitado"],
     "incapacitado": ["indefeso", "atordoado", "tonto", "caido", "impedido", "fatigado", "exausto"],
-    "morrendo": ["incapacitado","indefeso", "atordoado", "tonto", "caido", "impedido"],
+    "morrendo": ["incapacitado","indefeso", "atordoado", "tonto", "caido", "impedido", "exausto", "fatigado"],
     "paralisado": ["indefeso", "vulneravel", "imovel", "impedido", "atordoado", "tonto"],
     "restrito": ["impedido", "vulneravel"],
     "transe": ["atordoado"]

@@ -223,7 +223,6 @@ function checkEstaminaVida() {
   const estaminaAtual = Number(document.getElementById("estamina-combate").value) || 0;
   const estaminaTotal = Number(document.getElementById("estamina").value) || 0;
   const vidaAtual = Number(document.getElementById("vida-combate").value) || 0;
-  const vidaTotal = Number(document.getElementById("vida").value) || 0;
   
   if(estaminaAtual <= 0.2*estaminaTotal && estaminaAtual > 0) {
     adicionarCondicao("fatigado", "Fatigado");
@@ -236,5 +235,12 @@ function checkEstaminaVida() {
   else if(estaminaAtual <= -10) {
     adicionarCondicao("incapacitado", "Incapacitado");
     atribuirDescricaoCondicao("incapacitado");
+  }
+
+  if(vidaAtual <= 0) {
+    adicionarCondicao("morrendo", "Morrendo");
+    atribuirDescricaoCondicao("morrendo");
+  } else {
+    removerCondicao("morrendo");
   }
 }
