@@ -347,7 +347,13 @@ const descCondicoes = {
 
   "surpreso": " está atordoado (incapaz de agir) e vulnerável (metade das defesas ativas) por uma rodada, após isso ela é removida sem a necessidade de testes. Esquiva Fabulosa garante imunidade contra essa condição.",
 
-  "transe": " está atordoado (incapaz de agir). Qualquer ameaça óbvia quebra o transe, um teste de perícias de interação de um aliado também pode remover essa condição."
+  "transe": " está atordoado (incapaz de agir). Qualquer ameaça óbvia quebra o transe, um teste de perícias de interação de um aliado também pode remover essa condição.",
+
+  "combustao": " recebe (3d6/6d6/12d6) de dano no fim de cada um de seus turnos e também imediatamente após receber a condição. Com uma ação padrão é possível remover todos os níveis de combustão que estiver sofrendo. Essa condição tem o descritor de fogo. Realize um teste ao final de cada turno para remover a condição.",
+
+  "sangramento": "recebe (3d4/6d4/12d4) de dano no fim de cada um de seus turnos e também imediatamente após receber a condição. Realize um teste ao final de cada turno para remover a condição",
+
+  "envenenamento": "recebe (3/6/12) de dano no fim de cada um de seus turnos e também imediatamente após receber a condição,  também fica (Prejudicado/Prejudicado/Exausto). Essa condição tem o descritor veneno. Realize um teste ao final de cada turno para remover a condição"
 }
 
 function atribuirDescricaoCondicao(condicao) {

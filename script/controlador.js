@@ -232,10 +232,6 @@ function checkEstaminaVida() {
     adicionarCondicao("exausto", "Exausto");
     atribuirDescricaoCondicao("exausto");
   }
-  else if(estaminaAtual <= -10) {
-    adicionarCondicao("incapacitado", "Incapacitado");
-    atribuirDescricaoCondicao("incapacitado");
-  }
 
   if(vidaAtual <= 0) {
     adicionarCondicao("morrendo", "Morrendo");
