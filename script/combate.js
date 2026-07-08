@@ -387,7 +387,8 @@ function adicionarCondicao(id, nome) {
   if(id == "normal") {
     const condicoes = document.querySelectorAll(".condicao");
     condicoes.forEach(condicao => {
-      condicao.remove();
+      let condicaoId = condicao.id;
+      removerCondicao(condicaoId);
     });
   } else if (document.getElementById("normal")) {
     // Se a condição a ser adicionada não for "normal", a condição "normal" é removida
@@ -404,8 +405,9 @@ function adicionarCondicao(id, nome) {
     "amarrado": ["indefeso", "vulneravel", "imovel", "impedido", "prejudicado"],
     "caido": ["impedido"],
     "cego": ["impedido", "vulneravel"],
-    "fatigado": ["exausto", "incapacitado"],
-    "exausto": ["prejudicado", "impedido", "fatigado", "incapacitado"],
+    "fatigado": ["exausto"],
+    "impedido": ["fatigado"],
+    "exausto": ["prejudicado", "impedido", "fatigado"],
     "incapacitado": ["indefeso", "atordoado", "tonto", "caido", "impedido", "fatigado", "exausto"],
     "morrendo": ["incapacitado","indefeso", "atordoado", "tonto", "caido", "impedido", "exausto", "fatigado"],
     "paralisado": ["indefeso", "vulneravel", "imovel", "impedido", "atordoado", "tonto"],
@@ -417,7 +419,7 @@ function adicionarCondicao(id, nome) {
 
   if (sobrepostas) {
   sobrepostas.forEach(alvo => {
-    document.getElementById(alvo)?.remove();
+    removerCondicao(alvo);
   });
 }
 
@@ -429,11 +431,42 @@ function adicionarCondicao(id, nome) {
   `
 }
 
+function checkCondicoes() {
+  const condicoes = document.querySelectorAll(".condicao");
+  condicoes.forEach(condicao => {
+    const condicaoId = condicao.id;
+
+    switch (condicaoId) {
+      case "exausto":
+        adicionarPenalidadeVisual("-2");
+      case "fatigado":
+      case "impedido":
+        const nivelDeslocamento = Number(document.getElementById("nivel-deslocamento").value) || 0;
+        const deslocamento = document.getElementById("deslocamento-combate");
+        deslocamento.value = calculoDeslocamento(nivelDeslocamento/2) + " m";
+        deslocamento.style.backgroundColor = "#ff0000";
+        break;
+    }
+  });
+}
+
 function removerCondicao(condicao) {
   const condicaoEl = document.getElementById(condicao);
   
   if(condicaoEl) {
     condicaoEl.remove();
+
+    switch (condicao) {
+      case "exausto":
+        removerPenalidadeVisual();
+      case "fatigado":
+      case "impedido":
+        const nivelDeslocamento = Number(document.getElementById("nivel-deslocamento").value) || 0;
+        const deslocamento = document.getElementById("deslocamento-combate");
+        deslocamento.value = calculoDeslocamento(nivelDeslocamento) + " m";
+        deslocamento.style.backgroundColor = "transparent";
+        break;
+    }
   }
 
   document.getElementById("descricao-condicao").value = "";

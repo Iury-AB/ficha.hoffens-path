@@ -1,7 +1,174 @@
+
+function atualizarBarraCorrupcao() {
+  const barra = document.getElementById("corrupcao-progresso");
+  const corrupcao = document.getElementById("corrupcao");
+  const max = document.getElementById("corrupcao-maximo");
+
+  const valor = Number(corrupcao.value) || 0;
+  const limite = Number(max.value) || 1;
+
+  const percentual = Math.max(0, Math.min(1, (valor / limite)));
+
+  barra.style.width = percentual*100 + "%";
+
+  if(percentual < 0.5){
+    barra.style.background = `rgb(0,0,${255-510*percentual})`;
+  }else if(percentual >= 0.5 && percentual < 1){
+    barra.style.background = `rgb(${(2*percentual-0.5)*255}, 0, 0)`;
+  }else if(percentual >= 1){
+    barra.style.background = "rgb(255,0,0)";
+  }
+}
+
+function atualizarBarra(barra, atual, maximo) {
+  const barraEl = document.getElementById(barra);
+  const valorAtual = Number(document.getElementById(atual).value) || 0;
+  const valorMaximo = Number(document.getElementById(maximo).value) || 1;
+
+  const percentual = Math.max(0, Math.min(1, (valorAtual / valorMaximo)));
+
+  barraEl.style.width = percentual*100 + "%";
+}
+
+function atualizarPercentual(percentual, atual, maximo) {
+  const divPercentual = document.getElementById(percentual);
+  const valorAtual = Number(document.getElementById(atual).value) || 0;
+  const valorMaximo = Number(document.getElementById(maximo).value) || 1;
+
+  const pctDestino = Math.max(0, Math.min(1, (valorAtual / valorMaximo))) * 100;
+  
+  const startPct = Number(divPercentual.textContent.slice(0,-2)) || 0;
+  const duration = 500;
+  let startTime = null;
+
+  function animate(currentTime) {
+    if (!startTime) startTime = currentTime;
+    const progress = Math.min((currentTime - startTime) / duration, 1);
+    
+    // Linear interpolation: current = start + (target - start) * progress
+    const currentVal = startPct + (pctDestino - startPct) * progress;
+    
+    divPercentual.textContent = currentVal.toFixed(1) + "%";
+
+    if (progress < 1) {
+      requestAnimationFrame(animate);
+    }
+  }
+
+  requestAnimationFrame(animate);
+}
+
+function calculoDeslocamento(agilidade) {
+  let deslocamento = 0;
+  if(agilidade >= 0){
+    deslocamento = (agilidade + 1)*1.5;
+  }else if(agilidade < 0){
+    deslocamento = Math.pow(2, agilidade+1);
+    deslocamento = deslocamento.toFixed(2)
+  }
+
+  return deslocamento;
+}
+
+function atribuirDeslocamento(campo, destino) {
+  const agilidade = parseInt(document.getElementById(campo).value, 10);
+  const deslocamento = calculoDeslocamento(agilidade);
+  document.getElementById(destino).value = deslocamento + " m";
+}
+
+function calcularCustoHabilidades () {
+  let custoHabilidade = 0;
+  document.querySelectorAll(".habilidade").forEach(habilidade => {
+    const nivel = Number(habilidade.value) || 0;
+    custoHabilidade += nivel * 2;
+  });
+
+  document.getElementById("total-pontos-habilidades").value = custoHabilidade;
+}
+
+function calcularCustoDefesas () {
+  let custoDefesas = 0;
+  document.querySelectorAll(".defesa").forEach(defesa => {
+    const nivel = Number(defesa.value) || 0;
+    custoDefesas += nivel;
+  });
+
+  document.getElementById("total-pontos-defesas").value = custoDefesas;
+}
+
+function calcularCustoPericias () {
+  let custoPericias = 0;
+  document.querySelectorAll(".pericia").forEach(pericia => {
+    const nivel = Number(pericia.value) || 0;
+    custoPericias += Math.ceil(nivel/2);
+  });
+
+  document.getElementById("total-pontos-pericias").value = custoPericias;
+}
+
+function calcularTotalPontos () {
+  let custoPontos = 0;
+
+  const pontosHab = Number(document.getElementById("total-pontos-habilidades").value);
+  const pontosVan = Number(document.getElementById("total-pontos-vantagens").value);
+  const pontosPer = Number(document.getElementById("total-pontos-pericias").value);
+  const pontosDef = Number(document.getElementById("total-pontos-defesas").value);
+  const pondosPod = Number(document.getElementById("total-pontos-poderes").value);
+
+  custoPontos = pontosHab + pontosVan + pontosDef + pontosPer + pondosPod;
+
+  const totalPersonagem = document.getElementById("total-personagem");
+  totalPersonagem.value = custoPontos;
+
+  const pontosTotal = document.getElementById("totalPontos");
+
+  document.getElementById("total-pontos").value = Number(pontosTotal.value) || 0;
+
+  var pontosRestantes = Number(pontosTotal.value) - Number(totalPersonagem.value);
+
+  document.getElementById("restando-pontos").value = pontosRestantes;
+}
+
+function checkEstaminaVida() {
+  const estaminaAtual = Number(document.getElementById("estamina-combate").value) || 0;
+  const estaminaTotal = Number(document.getElementById("estamina").value) || 0;
+  const vidaAtual = Number(document.getElementById("vida-combate").value) || 0;
+  
+  if(estaminaAtual <= 0.2*estaminaTotal && estaminaAtual > 0) {
+    adicionarCondicao("fatigado", "Fatigado");
+    atribuirDescricaoCondicao("fatigado");
+  }
+  else if(estaminaAtual <= 0 && estaminaAtual > -10) {
+    adicionarCondicao("exausto", "Exausto");
+    atribuirDescricaoCondicao("exausto");
+  }
+
+  if(vidaAtual <= 0) {
+    adicionarCondicao("morrendo", "Morrendo");
+    atribuirDescricaoCondicao("morrendo");
+  } else {
+    removerCondicao("morrendo");
+  }
+}
+
+function adicionarPenalidadeVisual (valor) {
+  const dados = document.querySelectorAll(".botao-rolar");
+  dados.forEach(dado => {
+    dado.innerHTML = `<div class="modificadores-teste">${valor}</div>` + dado.innerHTML;
+  });
+}
+
+function removerPenalidadeVisual () {
+  const modificadores = document.querySelectorAll(".modificadores-teste");
+  modificadores.forEach(mod => mod.remove());
+}
+
+
+
 function recalcularTudo() {
   if (bloqueiaRecalculo) return; 
   bloqueiaRecalculo = true;
-
+  
   filtrarTabela("skills-table");
   calcularTotalAtributo("agilidade","esquiva-grad","esquiva-total","esquiva-outros");
   calcularTotalAtributo("luta","aparar-grad","aparar-total","aparar-outros");
@@ -87,7 +254,7 @@ function recalcularTudo() {
   copiaValor("vida", "vida-maxima-combate");
   copiaValor("estamina", "estamina-maxima-combate");
   copiaValor("nivelPoder", "nivel-poder-combate");
-  calcularDeslocamento("nivel-deslocamento", "deslocamento-combate");
+  atribuirDeslocamento("nivel-deslocamento", "deslocamento-combate");
   atualizarBarra("barra-vida","vida-combate", "vida-maxima-combate");
   atualizarPercentual("percentual-vida", "vida-combate", "vida-maxima-combate");
   atualizarBarra("barra-estamina","estamina-combate", "estamina-maxima-combate");
@@ -96,147 +263,6 @@ function recalcularTudo() {
   atribuirRolagemDano("nivel-dano", "rolagem-dano");
   ajustaRolagens();
   checkEstaminaVida();
+  checkCondicoes();
   bloqueiaRecalculo = false;
-}
-
-function atualizarBarraCorrupcao(corrupcao, max) {
-  const valor = Number(corrupcao.value) || 0;
-  const limite = Number(max.value) || 1;
-
-  const percentual = Math.max(0, Math.min(1, (valor / limite)));
-
-  barra.style.width = percentual*100 + "%";
-
-  if(percentual < 0.5){
-    barra.style.background = `rgb(0,0,${255-510*percentual})`;
-  }else if(percentual >= 0.5 && percentual < 1){
-    barra.style.background = `rgb(${(2*percentual-0.5)*255}, 0, 0)`;
-  }else if(percentual >= 1){
-    barra.style.background = "rgb(255,0,0)";
-  }
-}
-
-function atualizarBarra(barra, atual, maximo) {
-  const barraEl = document.getElementById(barra);
-  const valorAtual = Number(document.getElementById(atual).value) || 0;
-  const valorMaximo = Number(document.getElementById(maximo).value) || 1;
-
-  const percentual = Math.max(0, Math.min(1, (valorAtual / valorMaximo)));
-
-  barraEl.style.width = percentual*100 + "%";
-}
-
-function atualizarPercentual(percentual, atual, maximo) {
-  const divPercentual = document.getElementById(percentual);
-  const valorAtual = Number(document.getElementById(atual).value) || 0;
-  const valorMaximo = Number(document.getElementById(maximo).value) || 1;
-
-  const pctDestino = Math.max(0, Math.min(1, (valorAtual / valorMaximo))) * 100;
-  
-  const startPct = Number(divPercentual.textContent.slice(0,-2)) || 0;
-  const duration = 500;
-  let startTime = null;
-
-  function animate(currentTime) {
-    if (!startTime) startTime = currentTime;
-    const progress = Math.min((currentTime - startTime) / duration, 1);
-    
-    // Linear interpolation: current = start + (target - start) * progress
-    const currentVal = startPct + (pctDestino - startPct) * progress;
-    
-    divPercentual.textContent = currentVal.toFixed(1) + "%";
-
-    if (progress < 1) {
-      requestAnimationFrame(animate);
-    }
-  }
-
-  requestAnimationFrame(animate);
-}
-
-function calcularDeslocamento(campo, destino) {
-  const agilidade = parseInt(document.getElementById(campo).value, 10);
-  let deslocamento = 0;
-  if(agilidade >= 0){
-    deslocamento = (agilidade + 1)*1.5;
-  }else if(agilidade < 0){
-    deslocamento = Math.pow(2, agilidade+1);
-    deslocamento = deslocamento.toFixed(2)
-  }
-  document.getElementById(destino).value = deslocamento + " m";
-}
-
-function calcularCustoHabilidades () {
-  let custoHabilidade = 0;
-  document.querySelectorAll(".habilidade").forEach(habilidade => {
-    const nivel = Number(habilidade.value) || 0;
-    custoHabilidade += nivel * 2;
-  });
-
-  document.getElementById("total-pontos-habilidades").value = custoHabilidade;
-}
-
-function calcularCustoDefesas () {
-  let custoDefesas = 0;
-  document.querySelectorAll(".defesa").forEach(defesa => {
-    const nivel = Number(defesa.value) || 0;
-    custoDefesas += nivel;
-  });
-
-  document.getElementById("total-pontos-defesas").value = custoDefesas;
-}
-
-function calcularCustoPericias () {
-  let custoPericias = 0;
-  document.querySelectorAll(".pericia").forEach(pericia => {
-    const nivel = Number(pericia.value) || 0;
-    custoPericias += Math.ceil(nivel/2);
-  });
-
-  document.getElementById("total-pontos-pericias").value = custoPericias;
-}
-
-function calcularTotalPontos () {
-  let custoPontos = 0;
-
-  const pontosHab = Number(document.getElementById("total-pontos-habilidades").value);
-  const pontosVan = Number(document.getElementById("total-pontos-vantagens").value);
-  const pontosPer = Number(document.getElementById("total-pontos-pericias").value);
-  const pontosDef = Number(document.getElementById("total-pontos-defesas").value);
-  const pondosPod = Number(document.getElementById("total-pontos-poderes").value);
-
-  custoPontos = pontosHab + pontosVan + pontosDef + pontosPer + pondosPod;
-
-  const totalPersonagem = document.getElementById("total-personagem");
-  totalPersonagem.value = custoPontos;
-
-  const pontosTotal = document.getElementById("totalPontos");
-
-  document.getElementById("total-pontos").value = Number(pontosTotal.value) || 0;
-
-  var pontosRestantes = Number(pontosTotal.value) - Number(totalPersonagem.value);
-
-  document.getElementById("restando-pontos").value = pontosRestantes;
-}
-
-function checkEstaminaVida() {
-  const estaminaAtual = Number(document.getElementById("estamina-combate").value) || 0;
-  const estaminaTotal = Number(document.getElementById("estamina").value) || 0;
-  const vidaAtual = Number(document.getElementById("vida-combate").value) || 0;
-  
-  if(estaminaAtual <= 0.2*estaminaTotal && estaminaAtual > 0) {
-    adicionarCondicao("fatigado", "Fatigado");
-    atribuirDescricaoCondicao("fatigado");
-  }
-  else if(estaminaAtual <= 0 && estaminaAtual > -10) {
-    adicionarCondicao("exausto", "Exausto");
-    atribuirDescricaoCondicao("exausto");
-  }
-
-  if(vidaAtual <= 0) {
-    adicionarCondicao("morrendo", "Morrendo");
-    atribuirDescricaoCondicao("morrendo");
-  } else {
-    removerCondicao("morrendo");
-  }
 }

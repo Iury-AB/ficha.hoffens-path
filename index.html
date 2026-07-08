@@ -5,6 +5,18 @@
   <title id="pagina">Ficha de Personagem</title>
   <link href="styles.css" rel="stylesheet">
   <link rel="icon" href="img/hoffens icone.png" type="image/x-icon">
+
+  <script src="script/theme.js" defer></script>
+  <script src="script/utils.js" defer></script>
+  <script src="script/atributos.js" defer></script>
+  <script src="script/poder_vantagens.js" defer></script>
+  <script src="script/equipamento.js" defer></script>
+  <script src="script/ui.js" defer></script>
+  <script src="script/testes_discord.js" defer></script>
+  <script src="script/save_and_load.js" defer></script>
+  <script src="script/combate.js" defer></script>
+  <script src="script/controlador.js" defer></script>
+  <script src="script/init.js" defer></script>
 </head>
 <body>
 
@@ -252,7 +264,7 @@
               <img src="img/d20.png" alt="Rolar teste de Agilidade" id="teste-agilidade">
             </button>
             <label for="agilidade">Agilidade</label><br>
-            <input class="dependente habilidade" type="number" id="agilidade" oninput="calcularDeslocamento('agilidade', 'deslocamento')">
+            <input class="dependente habilidade" type="number" id="agilidade" oninput="atribuirDeslocamento('agilidade', 'deslocamento')">
           </div>
 
           <div class="sub-hab">
@@ -445,16 +457,6 @@
             <div class="span-6" style="position: relative;">
               <hr align="left" class="margem-barra">
               <hr id="corrupcao-progresso" align="left" style="position: relative; z-index: 2;margin-left: 2px;">
-              <script>
-                const barra = document.getElementById("corrupcao-progresso");
-                const corrupcao = document.getElementById("corrupcao");
-                const max = document.getElementById("corrupcao-maximo");
-
-                corrupcao.addEventListener("change", () => atualizarBarraCorrupcao(corrupcao, max));
-                max.addEventListener("change", () => atualizarBarraCorrupcao(corrupcao, max));
-
-                atualizarBarraCorrupcao();
-              </script>
             </div>
 
             <div class="field sub-hab span-2 vida-estamina" style="gap: 15px;margin: 5px;">
@@ -1419,7 +1421,7 @@
 
         <div class="linha-combate">
           <label for="vida-combate">Vida</label>
-          <input type="number" id="vida-combate" class="campo-editavel" onchange="checkEstaminaVida()">
+          <input type="number" id="vida-combate" class="campo-editavel" onchange="checkEstaminaVida();checkCondicoes();">
           <label for="vida-maxima-combate">
             / <input type="number" id="vida-maxima-combate" class="campo-calculado" readonly>
           </label>
@@ -1427,7 +1429,7 @@
 
         <div class="linha-combate">
           <label for="estamina-combate">Estamina</label>
-          <input type="number" id="estamina-combate" class="campo-editavel" onchange="checkEstaminaVida()">
+          <input type="number" id="estamina-combate" class="campo-editavel" onchange="checkEstaminaVida();checkCondicoes();">
           <label for="estamina-maxima-combate">
             / <input type="number" id="estamina-maxima-combate" class="campo-calculado" readonly>
           </label>
@@ -1465,7 +1467,7 @@
         <div class="linha-combate">
           <label for="">Condições</label>
 
-          <select name="condicoes" id="condicoes-personagem" class="campo-editavel dependente span-2" onchange="adicionarCondicaoSelect();atribuirDescricaoCondicao(this.value)">
+          <select name="condicoes" id="condicoes-personagem" class="campo-editavel span-2" onchange="adicionarCondicaoSelect();atribuirDescricaoCondicao(this.value);checkCondicoes();recalcularTudo();">
             <optgroup label="-----Condições Simples-----">
               <option value="normal">Normal</option>
               <option value="atordoado">Atordoado</option>
@@ -1700,17 +1702,5 @@
       
     </div>
   </div>
-  
-  <script src="script/theme.js"></script>
-  <script src="script/utils.js"></script>
-  <script src="script/atributos.js"></script>
-  <script src="script/poder_vantagens.js"></script>
-  <script src="script/equipamento.js"></script>
-  <script src="script/controlador.js"></script>
-  <script src="script/ui.js"></script>
-  <script src="script/testes_discord.js"></script>
-  <script src="script/save_and_load.js"></script>
-  <script src="script/init.js"></script>
-  <script src="script/combate.js"></script>
 </body>
 </html>

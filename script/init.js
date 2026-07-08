@@ -8,6 +8,8 @@ document.addEventListener("input", function (e) {
   }
 });
 
+
+
 document.addEventListener("input", function (e) {
   if (e.target.classList.contains("config")) {
     salvarConfig();
@@ -22,7 +24,15 @@ document.getElementById("vida-combate").addEventListener("change", () => {
 document.getElementById("estamina-combate").addEventListener("change", () => {
   atualizarBarra("barra-estamina","estamina-combate", "estamina-maxima-combate");
   atualizarPercentual("percentual-estamina", "estamina-combate", "estamina-maxima-combate");
-})
+});
+
+document.getElementById("corrupcao").addEventListener("change", () => {
+  atualizarBarraCorrupcao()
+});
+
+document.getElementById("corrupcao-maximo").addEventListener("change", () => {
+  atualizarBarraCorrupcao()
+});
 
 carregarConfig();
 

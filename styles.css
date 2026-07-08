@@ -720,6 +720,7 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 .botao-rolar {
+  position: relative;
   background-color: transparent;
   border: none;
   padding: 1px;
@@ -1423,6 +1424,20 @@ textarea::placeholder {
 .condicao:hover .remover-condicao {
   opacity: 100%;
   color: var();
+}
+
+.modificadores-teste {
+  align-self: center;
+  position: absolute;
+  left: 25%;
+  z-index: 2;
+  border: 1px solid red;
+  color: white;
+  font-family: BebasNeue Pro;
+  font-size: 70%;
+  background-color: red;
+  border-radius: 5px;
+  pointer-events: none;
 }
 
 .consulta-dano {
