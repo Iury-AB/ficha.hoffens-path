@@ -443,7 +443,7 @@ function checkCondicoes() {
       case "impedido":
         const nivelDeslocamento = Number(document.getElementById("nivel-deslocamento").value) || 0;
         const deslocamento = document.getElementById("deslocamento-combate");
-        deslocamento.value = calculoDeslocamento(nivelDeslocamento/2) + " m";
+        deslocamento.value = calculoDeslocamento(nivelDeslocamento)/2 + " m";
         deslocamento.style.backgroundColor = "#ff0000";
         break;
     }
