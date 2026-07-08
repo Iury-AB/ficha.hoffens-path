@@ -405,7 +405,6 @@ function adicionarCondicao(id, nome) {
     "amarrado": ["indefeso", "vulneravel", "imovel", "impedido", "prejudicado"],
     "caido": ["impedido"],
     "cego": ["impedido", "vulneravel"],
-    "fatigado": ["exausto"],
     "impedido": ["fatigado"],
     "exausto": ["prejudicado", "impedido", "fatigado"],
     "incapacitado": ["indefeso", "atordoado", "tonto", "caido", "impedido", "fatigado", "exausto"],
@@ -468,6 +467,7 @@ function removerCondicao(condicao) {
         break;
     }
   }
-
+  checkCondicoes();
+  
   document.getElementById("descricao-condicao").value = "";
 }

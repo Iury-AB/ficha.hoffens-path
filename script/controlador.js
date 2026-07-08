@@ -138,7 +138,7 @@ function checkEstaminaVida() {
     adicionarCondicao("fatigado", "Fatigado");
     atribuirDescricaoCondicao("fatigado");
   }
-  else if(estaminaAtual <= 0 && estaminaAtual > -10) {
+  else if(estaminaAtual <= 0) {
     adicionarCondicao("exausto", "Exausto");
     atribuirDescricaoCondicao("exausto");
   }
