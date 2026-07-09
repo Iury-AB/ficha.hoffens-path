@@ -507,6 +507,33 @@ const removerEfeito = {
     aplicarModificadorDefesas(1, "transparent", "esquiva-combate");
     copiaValor("aparar-total", "aparar-combate");
     copiaValor("esquiva-total", "esquiva-combate");
+  },
+  "paralisado": () => {
+    removerEfeito["imovel"]();
+    removerEfeito["indefeso"]();
+  },
+  "restrito": () => {
+    removerEfeito["impedido"]();
+    removerEfeito["vulneravel"]();
+  },
+  "cego": () => {
+    removerEfeito["impedido"]();
+    removerEfeito["vulneravel"]();
+  },
+  "adormecido": () => {
+    removerEfeito["indefeso"]();
+  },
+  "amarrado": () => {
+    removerEfeito["indefeso"]();
+    removerEfeito["imovel"]();
+  },
+  "incapacitado": () => {
+    removerEfeito["indefeso"]();
+    removerEfeito["caido"]();
+  },
+  "morrendo": () => {
+    removerEfeito["indefeso"]();
+    removerEfeito["caido"]();
   }
 
 }
