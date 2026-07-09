@@ -433,12 +433,18 @@ function adicionarCondicao(id, nome) {
   `
 }
 
-function aplicarPenalidadeDeslocamento(fator, cor) {
+function aplicarModificadorDeslocamento(fator, cor) {
   const deslocamento = document.getElementById("deslocamento-combate");
   const nivelDeslocamento = Number(document.getElementById("nivel-deslocamento").value) || 0;
   
   deslocamento.value = (calculoDeslocamento(nivelDeslocamento) * fator) + " m";
   deslocamento.style.backgroundColor = cor;
+}
+
+function aplicarModificadorDefesas(fator, cor, defesa) {
+  const defesaCampo = document.getElementById(defesa);
+  defesaCampo.style.backgroundColor = cor;
+  defesaCampo.value = Math.floor(defesaCampo.value * fator);
 }
 
 const aplicarEfeito = {
@@ -450,22 +456,60 @@ const aplicarEfeito = {
   },
   "exausto": () => {
     adicionarAoModificadorGlobal(-2);
-    aplicarPenalidadeDeslocamento(0.5, "#ff0000");
+    aplicarModificadorDeslocamento(0.5, "#ff0000");
   },
   "fatigado": () => {
-    aplicarPenalidadeDeslocamento(0.5, "#ff0000");
+    aplicarModificadorDeslocamento(0.5, "#ff0000");
   },
   "impedido": () => {
-    aplicarPenalidadeDeslocamento(0.5, "#ff0000");
+    aplicarModificadorDeslocamento(0.5, "#ff0000");
   },
   "caido": () => {
-    aplicarPenalidadeDeslocamento(0.5, "#ff0000");
+    aplicarModificadorDeslocamento(0.5, "#ff0000");
   },
   "imovel": () => {
-    aplicarPenalidadeDeslocamento(0, "#ff0000");
+    aplicarModificadorDeslocamento(0, "#ff0000");
+  },
+  "vulneravel": () => {
+    aplicarModificadorDefesas(0.5, "#ff0000", "aparar-combate");
+    aplicarModificadorDefesas(0.5, "#ff0000", "esquiva-combate");
+  },
+  "indefeso": () => {
+    aplicarModificadorDefesas(0, "#ff0000", "aparar-combate");
+    aplicarModificadorDefesas(0, "#ff0000", "esquiva-combate");
   }
-  
 };
+
+const removerEfeito = {
+  "exausto": () => {
+    aplicarModificadorDeslocamento(1, "transparent");
+  },
+  "caido": () => {
+    aplicarModificadorDeslocamento(1, "transparent");
+  },
+  "impedido": () => {
+    aplicarModificadorDeslocamento(1, "transparent");
+  },
+  "fatigado": () => {
+    aplicarModificadorDeslocamento(1, "transparent");
+  },
+  "imovel": () => {
+    aplicarModificadorDeslocamento(1, "transparent");
+  },
+  "vulneravel": () => {
+    aplicarModificadorDefesas(2, "transparent", "aparar-combate");
+    aplicarModificadorDefesas(2, "transparent", "esquiva-combate");
+    copiaValor("aparar-total", "aparar-combate");
+    copiaValor("esquiva-total", "esquiva-combate");
+  },
+  "indefeso": () => {
+    aplicarModificadorDefesas(1, "transparent", "aparar-combate");
+    aplicarModificadorDefesas(1, "transparent", "esquiva-combate");
+    copiaValor("aparar-total", "aparar-combate");
+    copiaValor("esquiva-total", "esquiva-combate");
+  }
+
+}
 
 function checkCondicoes() {
   modificadorGlobal = 0;
@@ -523,14 +567,12 @@ function checkCondicoes() {
 
 }
 
-
-
 function removerCondicao(condicao) {
   const condicaoEl = document.getElementById(condicao);
   
   if(condicaoEl) {
     condicaoEl.remove();
-
+    removerEfeito[condicao]?.();
     checkCondicoes();
     checkModificadorGlobal();
     
