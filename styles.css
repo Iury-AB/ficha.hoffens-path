@@ -1296,6 +1296,40 @@ textarea::placeholder {
   white-space: nowrap;
 }
 
+.defesas-combate {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding-left: 15px;
+  padding-right: 15px;
+  justify-items: left;
+  font-size: 30px;
+  background-size: 0% 100%;
+  background-repeat: no-repeat;
+  transition: 
+    background-size 0.3s ease-out;
+}
+
+label[for="aparar-combate"], label[for="esquiva-combate"] {
+  align-items: center;
+  display: flex;
+  position: relative;
+  gap: 5%;
+  font-size: 20px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.defesas-combate input {
+  border-radius: 5px;
+  width: 30px;
+}
+
+.defesas-combate:hover {
+  background-image: linear-gradient(to right, var(--cor-primaria), transparent, transparent);
+  background-size: 100% 100%;
+}
+
 #acao-combate{
   max-height: 100%;
 }
@@ -1431,13 +1465,25 @@ textarea::placeholder {
   position: absolute;
   left: 25%;
   z-index: 2;
-  border: 1px solid red;
   color: white;
   font-family: BebasNeue Pro;
   font-size: 70%;
-  background-color: red;
   border-radius: 5px;
   pointer-events: none;
+  opacity: 0%;
+  transition: opacity 0.2s;
+}
+
+.penalidade {
+  background-color: red;
+  border: 1px solid red;
+  opacity: 100%;
+}
+
+.bonus {
+  background-color: green;
+  border: 1px solid green;
+  opacity: 100%;
 }
 
 .consulta-dano {

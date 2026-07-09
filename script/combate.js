@@ -184,6 +184,7 @@ function adicionarAtaque() {
     <label for="nivel-ataque-${contadorAtaques}">
       Nível [<input type="number" name="nivel-ataque" id="nivel-ataque-${contadorAtaques}" class="campo-editavel dependente" placeholder="Nível">]
       <button class="botao-rolar" onclick="testeAtaque(${contadorAtaques})">
+        <div class="modificadores-teste"></div>
         <img src="img/d20.png" alt="rolar-nivel-${contadorAtaques}" title="Rolar Ataque ${contadorAtaques}">
       </button>
     </label>
@@ -200,6 +201,7 @@ function adicionarAtaque() {
     <label for="acerto-ataque-${contadorAtaques}">Acerto:
       <input type="number" name="acerto-ataque" id="acerto-ataque-${contadorAtaques}" class="campo-editavel dependente" placeholder="Acerto">
       <button class="botao-rolar" onclick="testeAcerto(${contadorAtaques})">
+        <div class="modificadores-teste"></div>
         <img src="img/d20.png" alt="rolar-acerto-${contadorAtaques}" title="Rolar Acerto ${contadorAtaques}">
       </button>
     </label>
@@ -401,11 +403,12 @@ function adicionarCondicao(id, nome) {
     "imovel": ["impedido"],
     "atordoado": ["tonto"],
     "indefeso": ["vulneravel"],
-    "adormecido": ["indefeso", "atordoado", "caido", "impedido"] ,
+    "adormecido": ["indefeso", "vulneravel", "atordoado", "caido", "impedido"] ,
     "amarrado": ["indefeso", "vulneravel", "imovel", "impedido", "prejudicado"],
     "caido": ["impedido"],
     "cego": ["impedido", "vulneravel"],
     "impedido": ["fatigado"],
+    "desabilitado": ["prejudicado"],
     "exausto": ["prejudicado", "impedido", "fatigado"],
     "incapacitado": ["indefeso", "atordoado", "tonto", "caido", "impedido", "fatigado", "exausto"],
     "morrendo": ["incapacitado","indefeso", "atordoado", "tonto", "caido", "impedido", "exausto", "fatigado"],
@@ -417,10 +420,10 @@ function adicionarCondicao(id, nome) {
   const sobrepostas = sobreposicao[id];
 
   if (sobrepostas) {
-  sobrepostas.forEach(alvo => {
-    removerCondicao(alvo);
-  });
-}
+    sobrepostas.forEach(alvo => {
+      removerCondicao(alvo);
+    });
+  }
 
   listaCondicoes.innerHTML = listaCondicoes.innerHTML + `
   <div class="condicao" id="${id}" onclick="atribuirDescricaoCondicao('${id}')">
@@ -430,24 +433,97 @@ function adicionarCondicao(id, nome) {
   `
 }
 
+function aplicarPenalidadeDeslocamento(fator, cor) {
+  const deslocamento = document.getElementById("deslocamento-combate");
+  const nivelDeslocamento = Number(document.getElementById("nivel-deslocamento").value) || 0;
+  
+  deslocamento.value = (calculoDeslocamento(nivelDeslocamento) * fator) + " m";
+  deslocamento.style.backgroundColor = cor;
+}
+
+const aplicarEfeito = {
+  "desabilitado": () => {
+    adicionarAoModificadorGlobal(-5); 
+  },
+  "prejudicado": () => {
+    adicionarAoModificadorGlobal(-2);
+  },
+  "exausto": () => {
+    adicionarAoModificadorGlobal(-2);
+    aplicarPenalidadeDeslocamento(0.5, "#ff0000");
+  },
+  "fatigado": () => {
+    aplicarPenalidadeDeslocamento(0.5, "#ff0000");
+  },
+  "impedido": () => {
+    aplicarPenalidadeDeslocamento(0.5, "#ff0000");
+  },
+  "caido": () => {
+    aplicarPenalidadeDeslocamento(0.5, "#ff0000");
+  },
+  "imovel": () => {
+    aplicarPenalidadeDeslocamento(0, "#ff0000");
+  }
+  
+};
+
 function checkCondicoes() {
+  modificadorGlobal = 0;
+  
   const condicoes = document.querySelectorAll(".condicao");
+  const conjuntoCondicoes = new Set();
+
+  // Algumas condições se sobrepõe a outras
+  const sobreposicao = {
+    "imovel": ["impedido"],
+    "indefeso": ["vulneravel"],
+    "caido": ["impedido"],
+    "impedido": ["fatigado"],
+    "desabilitado": ["prejudicado"],
+    "transe": ["atordoado"]
+  };
+
+  const combinadas = {
+    "restrito": ["impedido", "vulneravel"],
+    "cego": ["impedido", "vulneravel"],
+    "adormecido": ["indefeso", "atordoado", "caido"] ,
+    "amarrado": ["indefeso", "imovel", "prejudicado"],
+    "exausto": ["prejudicado", "impedido"],
+    "incapacitado": ["indefeso", "atordoado", "caido"],
+    "morrendo": ["indefeso", "atordoado", "caido"],
+    "paralisado": ["indefeso","imovel", "atordoado"],
+  }
+
   condicoes.forEach(condicao => {
     const condicaoId = condicao.id;
 
-    switch (condicaoId) {
-      case "exausto":
-        adicionarPenalidadeVisual("-2");
-      case "fatigado":
-      case "impedido":
-        const nivelDeslocamento = Number(document.getElementById("nivel-deslocamento").value) || 0;
-        const deslocamento = document.getElementById("deslocamento-combate");
-        deslocamento.value = calculoDeslocamento(nivelDeslocamento)/2 + " m";
-        deslocamento.style.backgroundColor = "#ff0000";
-        break;
+    if (combinadas[condicaoId]) {
+      combinadas[condicaoId].forEach(parte => {
+        conjuntoCondicoes.add(parte);
+      });
+    } else {
+      conjuntoCondicoes.add(condicaoId);
+    }
+    
+  });
+
+  for (const condicaoForte in sobreposicao) {
+    if (conjuntoCondicoes.has(condicaoForte)) {
+      sobreposicao[condicaoForte].forEach(condicaoFraca => {
+        conjuntoCondicoes.delete(condicaoFraca);
+      });
+    }
+  }
+
+  conjuntoCondicoes.forEach(condicaoReal => {
+    if (aplicarEfeito[condicaoReal]) {
+      aplicarEfeito[condicaoReal](); 
     }
   });
+
 }
+
+
 
 function removerCondicao(condicao) {
   const condicaoEl = document.getElementById(condicao);
@@ -455,19 +531,10 @@ function removerCondicao(condicao) {
   if(condicaoEl) {
     condicaoEl.remove();
 
-    switch (condicao) {
-      case "exausto":
-        removerPenalidadeVisual();
-      case "fatigado":
-      case "impedido":
-        const nivelDeslocamento = Number(document.getElementById("nivel-deslocamento").value) || 0;
-        const deslocamento = document.getElementById("deslocamento-combate");
-        deslocamento.value = calculoDeslocamento(nivelDeslocamento) + " m";
-        deslocamento.style.backgroundColor = "transparent";
-        break;
-    }
+    checkCondicoes();
+    checkModificadorGlobal();
+    
+    document.getElementById("descricao-condicao").value = "";
   }
-  checkCondicoes();
   
-  document.getElementById("descricao-condicao").value = "";
 }

@@ -8,8 +8,6 @@ document.addEventListener("input", function (e) {
   }
 });
 
-
-
 document.addEventListener("input", function (e) {
   if (e.target.classList.contains("config")) {
     salvarConfig();
@@ -33,6 +31,21 @@ document.getElementById("corrupcao").addEventListener("change", () => {
 document.getElementById("corrupcao-maximo").addEventListener("change", () => {
   atualizarBarraCorrupcao()
 });
+
+function adicionarModificadorVisual () {
+  const dados = document.querySelectorAll(".botao-rolar");
+  dados.forEach(dado => {
+    if(dado.id == "rolar-dano-teste") return;
+    dado.innerHTML = `<div class="modificadores-teste"></div>` + dado.innerHTML;
+  });
+}
+
+function removerModificadorVisual () {
+  const modificadores = document.querySelectorAll(".modificadores-teste");
+  modificadores.forEach(mod => mod.remove());
+}
+
+adicionarModificadorVisual();
 
 carregarConfig();
 

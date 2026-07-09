@@ -130,40 +130,59 @@ function calcularTotalPontos () {
 }
 
 function checkEstaminaVida() {
-  const estaminaAtual = Number(document.getElementById("estamina-combate").value) || 0;
+  const estaminaAtual = document.getElementById("estamina-combate").value;
   const estaminaTotal = Number(document.getElementById("estamina").value) || 0;
-  const vidaAtual = Number(document.getElementById("vida-combate").value) || 0;
+  const vidaAtual = document.getElementById("vida-combate").value;
   
-  if(estaminaAtual <= 0.2*estaminaTotal && estaminaAtual > 0) {
-    adicionarCondicao("fatigado", "Fatigado");
-    atribuirDescricaoCondicao("fatigado");
+  if(estaminaAtual !== "") {
+    if(estaminaAtual <= 0.2*estaminaTotal && estaminaAtual > 0) {
+      adicionarCondicao("fatigado", "Fatigado");
+      atribuirDescricaoCondicao("fatigado");
+    }
+    else if(estaminaAtual <= 0) {
+      adicionarCondicao("exausto", "Exausto");
+      atribuirDescricaoCondicao("exausto");
+    }
   }
-  else if(estaminaAtual <= 0) {
-    adicionarCondicao("exausto", "Exausto");
-    atribuirDescricaoCondicao("exausto");
+  
+  if(vidaAtual !== "") {
+    if(vidaAtual <= 0) {
+      adicionarCondicao("morrendo", "Morrendo");
+      atribuirDescricaoCondicao("morrendo");
+    } else {
+      removerCondicao("morrendo");
+    }
   }
-
-  if(vidaAtual <= 0) {
-    adicionarCondicao("morrendo", "Morrendo");
-    atribuirDescricaoCondicao("morrendo");
-  } else {
-    removerCondicao("morrendo");
-  }
+  
 }
 
-function adicionarPenalidadeVisual (valor) {
-  const dados = document.querySelectorAll(".botao-rolar");
-  dados.forEach(dado => {
-    dado.innerHTML = `<div class="modificadores-teste">${valor}</div>` + dado.innerHTML;
-  });
+var modificadorGlobal = 0;
+
+function adicionarAoModificadorGlobal(valor) {
+  modificadorGlobal += valor;
 }
 
-function removerPenalidadeVisual () {
+function checkModificadorGlobal() {
   const modificadores = document.querySelectorAll(".modificadores-teste");
-  modificadores.forEach(mod => mod.remove());
+  
+  modificadores.forEach(modif => {
+    modif.innerHTML = modificadorGlobal;
+
+    if (modificadorGlobal < 0) {
+      modif.classList.add("penalidade");
+      modif.classList.remove("bonus");
+    }
+    else if (modificadorGlobal > 0){
+      modif.classList.add("bonus");
+      modif.classList.remove("penalidade");
+    }
+    else {
+      modif.classList.remove("bonus");
+      modif.classList.remove("penalidade");
+    }
+  });
+
 }
-
-
 
 function recalcularTudo() {
   if (bloqueiaRecalculo) return; 
@@ -235,7 +254,7 @@ function recalcularTudo() {
   const max = document.getElementById("corrupcao-maximo");
   
   despertar();
-  atualizarBarraCorrupcao(corrupcao, max);
+  atualizarBarraCorrupcao();
   calcularBonusClasse();
   calcularVida();
   calcularEstamina();
@@ -254,6 +273,8 @@ function recalcularTudo() {
   copiaValor("vida", "vida-maxima-combate");
   copiaValor("estamina", "estamina-maxima-combate");
   copiaValor("nivelPoder", "nivel-poder-combate");
+  copiaValor("esquiva-total", "esquiva-combate");9
+  copiaValor("aparar-total", "aparar-combate");
   atribuirDeslocamento("nivel-deslocamento", "deslocamento-combate");
   atualizarBarra("barra-vida","vida-combate", "vida-maxima-combate");
   atualizarPercentual("percentual-vida", "vida-combate", "vida-maxima-combate");
@@ -263,6 +284,8 @@ function recalcularTudo() {
   atribuirRolagemDano("nivel-dano", "rolagem-dano");
   ajustaRolagens();
   checkEstaminaVida();
+
   checkCondicoes();
+  checkModificadorGlobal();
   bloqueiaRecalculo = false;
 }

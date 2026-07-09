@@ -221,6 +221,7 @@ function adicionarEfeito(poder) {
     </button>
 
     <button class="botao-rolar" onclick="rolarPoderPersonalizado(${poder}, ${contadorEfeitos[poder]}, ${contadorEfeitosLigados[poder][contadorEfeitos[poder]]})">
+      <div class="modificadores-teste"></div>
       <img src="img/d20.png" alt="Rolar teste de Poder">
     </button>
 
@@ -260,6 +261,7 @@ function adicionarLigado(poder, efeito) {
     <br>
 
     <button class="botao-rolar" onclick="rolarPoderPersonalizado(${poder}, ${efeito}, ${contadorEfeitosLigados[poder][efeito]})">
+      <div class="modificadores-teste"></div>
       <img src="img/d20.png" alt="Rolar teste de Poder" id="teste-ligado-${poder}-${efeito}-${contadorEfeitosLigados[poder][efeito]}">
     </button>
     
