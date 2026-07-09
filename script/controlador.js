@@ -156,34 +156,6 @@ function checkEstaminaVida() {
   
 }
 
-var modificadorGlobal = 0;
-
-function adicionarAoModificadorGlobal(valor) {
-  modificadorGlobal += valor;
-}
-
-function checkModificadorGlobal() {
-  const modificadores = document.querySelectorAll(".modificadores-teste");
-  
-  modificadores.forEach(modif => {
-    modif.innerHTML = modificadorGlobal;
-
-    if (modificadorGlobal < 0) {
-      modif.classList.add("penalidade");
-      modif.classList.remove("bonus");
-    }
-    else if (modificadorGlobal > 0){
-      modif.classList.add("bonus");
-      modif.classList.remove("penalidade");
-    }
-    else {
-      modif.classList.remove("bonus");
-      modif.classList.remove("penalidade");
-    }
-  });
-
-}
-
 function recalcularTudo() {
   if (bloqueiaRecalculo) return; 
   bloqueiaRecalculo = true;

@@ -15,6 +15,7 @@
   <script src="script/testes_discord.js" defer></script>
   <script src="script/save_and_load.js" defer></script>
   <script src="script/combate.js" defer></script>
+  <script src="script/condicoes.js" defer></script>
   <script src="script/controlador.js" defer></script>
   <script src="script/init.js" defer></script>
 </head>
@@ -1422,13 +1423,13 @@
         <div class="defesas-combate">
           <label for="">Defesas</label>
           <label for="aparar-combate">Aparar
-            <button title="Rolar Aparar" class="botao-rolar" onclick="testeAtributo('aparar-combate','Aparar');">
+            <button title="Rolar Aparar" class="botao-rolar" onclick="testeDefesa('aparar-combate','Aparar');">
               <img src="img/d20.png" alt="Rolar Aparar">
             </button>
             <input type="number" id="aparar-combate" class="campo-calculado" readonly>
           </label>
           <label for="esquiva-combate">Esquiva
-            <button title="Rolar Esquiva" class="botao-rolar" onclick="testeAtributo('esquiva-combate','Esquiva');">
+            <button title="Rolar Esquiva" class="botao-rolar" onclick="testeDefesa('esquiva-combate','Esquiva');">
               <img src="img/d20.png" alt="Rolar Esquiva">
             </button>
             <input type="number" id="esquiva-combate" class="campo-calculado" readonly>
@@ -1493,10 +1494,12 @@
               <option value="desabilitado">Desabilitado</option>
               <option value="desatento">Desatento</option>
               <option value="fatigado">Fatigado</option>
+              <option value ="fluxo">Fluxo</option>
               <option value="imovel">Imóvel</option>
               <option value="impedido">Impedido</option>
               <option value="indefeso">Indefeso</option>
               <option value="prejudicado">Prejudicado</option>
+              <option value="receoso">Receoso</option>
               <option value="tonto">Tonto</option>
               <option value="transformado">Transformado</option>
               <option value="vulneravel">Vunerável</option>

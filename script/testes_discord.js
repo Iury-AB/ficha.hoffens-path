@@ -20,18 +20,22 @@ function d20() {
   return Math.floor(Math.random() * 20) + 1;
 }
 
-function testeAtributo(id, nome) {
+function testeAtributo(id, nome, condicoes = null) {
   var atributo = Number(document.getElementById(id).value) || 0;
   var rolagem = d20();
 
-  var resultado = rolagem + atributo;
+  var resultado = rolagem + atributo + modificadorGlobalCondicao;
 
   const jogador = document.getElementById("usuario-discord").value || "---";
   const servidorDiscord = document.getElementById("servidor-discord").value;
+  
+  let totalCondicoes = (condicoes !== null) ? adicionarListaCondicoesModificadores(condicoes) : listaCondicoesModificadores;
 
   var dados = {
     [`resultado.${nome}`]: resultado,
     [`Hab.${nome}`]: atributo,
+    "modificadorGlobalCondicao": modificadorGlobalCondicao,
+    "condicoes": totalCondicoes,
     "discordID": servidorDiscord,
     "Jogador": jogador
   };
@@ -131,6 +135,20 @@ function testeAcerto(ataque) {
 function testeAtaque(ataque) {
   const nomeAtaque = document.getElementById(`nome-ataque-${ataque}`).value;
   testeAtributo(`nivel-ataque-${ataque}`, nomeAtaque);
+}
+
+function testeDefesa(defesa, nome) {
+
+  const listaCondicoes = document.querySelectorAll(".condicao");
+  var condicoes = null;
+  listaCondicoes.forEach(condicao => {
+    const condicaoId = condicao.id;
+    if (condicaoId in condicoesDefesa) {
+      condicoes = condicaoId;
+    }
+  });
+  
+  testeAtributo(defesa, nome, condicoes);
 }
 
 function testeCura(nvl, rol, crit) {
