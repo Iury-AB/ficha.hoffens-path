@@ -101,7 +101,6 @@ function carregarFicha(nome) {
   const nAtaques = JSON.parse(localStorage.getItem(`contadorAtaques:${nome}`));
 
   const listaAtaques = document.querySelector(".lista-ataques");
-  listaAtaques.innerHTML = "<h1>Ataques</h1>";
 
   contadorAtaques = 0;
 
@@ -236,8 +235,6 @@ function limparFicha() {
   listaVantagens.innerHTML = "";
 
   contadorAtaques = 0;
-  const listaAtaques = document.querySelector(".lista-ataques");
-  listaAtaques.innerHTML = "<h1>Ataques</h1>";
 
   contadorModificadores = [];
   contadorEfeitos = [];
