@@ -1424,6 +1424,7 @@ label[for="aparar-combate"], label[for="esquiva-combate"] {
   background-color: transparent;
   width: 100%;
   field-sizing: content;
+  resize: none;
   font-size: 10px;
   color: var(--cor-tema-letras);
 }
