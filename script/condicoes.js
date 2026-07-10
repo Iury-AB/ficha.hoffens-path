@@ -91,15 +91,15 @@ const aplicarEfeito = {
   "prejudicado": () => {
     adicionarAoModificadorGlobal(-2);
   },
-  "exausto": () => {
-    adicionarAoModificadorGlobal(-2);
-    aplicarModificadorDeslocamento(0.5, "#ff0000");
-  },
   "fatigado": () => {
     aplicarModificadorDeslocamento(0.5, "#ff0000");
   },
   "impedido": () => {
     aplicarModificadorDeslocamento(0.5, "#ff0000");
+  },
+  "exausto": () => {
+    aplicarEfeito["prejudicado"]();
+    aplicarEfeito["impedido"]();
   },
   "caido": () => {
     aplicarModificadorDeslocamento(0.5, "#ff0000");
@@ -200,7 +200,7 @@ function adicionarCondicao(id, nome) {
   listaCondicoes.innerHTML = listaCondicoes.innerHTML + `
   <div class="condicao" id="${id}" onclick="atribuirDescricaoCondicao('${id}')">
     ${nome}
-    <button class="remover-condicao" onclick="removerCondicao('${id}')">X</button>
+    <button class="remover-condicao" onclick="removerCondicao('${id}');recalcularTudo();">X</button>
   </div>
   `
 }
@@ -210,8 +210,6 @@ var listaCondicoesModificadores = "";
 function adicionarListaCondicoesModificadores (condicao) {
   let condicaoSomada = "";
   let condicaoParcela = (condicao in condicoesModificadores) ? condicoesModificadores[condicao] : condicoesDefesa[condicao];
-  console.log(condicao);
-  console.log(condicoesDefesa[condicao]);
 
   if(listaCondicoesModificadores) {
     condicaoSomada = listaCondicoesModificadores + ", " + condicaoParcela;
@@ -240,8 +238,6 @@ function removerCondicao(condicao) {
   
   if(condicaoEl) {
     condicaoEl.remove();
-    recalcularTudo();
-    checkModificadorGlobal();
     
     document.getElementById("descricao-condicao").value = "";
   }
