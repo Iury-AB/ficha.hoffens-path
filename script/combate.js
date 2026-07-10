@@ -46,9 +46,11 @@ function recuperarVida(cura, recEstamina) {
   const vidaAtual = document.getElementById("vida-combate");
   const estaminaAtual = document.getElementById("estamina-combate");
   const pct = Number(document.getElementById(recEstamina).value) || 0;
+  const vidaMaxima = Number(document.getElementById("vida-maxima-combate").value) || 0;
+  const estaminaMaxima = Number(document.getElementById("estamina-maxima-combate").value) || 0;
 
-  vidaAtual.value = Number(vidaAtual.value) + curaRecebida;
-  estaminaAtual.value = Number(estaminaAtual.value) + (pct/100)*curaRecebida;
+  vidaAtual.value = Math.min(Number(vidaAtual.value) + curaRecebida, vidaMaxima);
+  estaminaAtual.value = Math.min(Number(estaminaAtual.value) + (pct/100)*curaRecebida, estaminaMaxima);
 
   recalcularTudo();
   return danoSofrido;

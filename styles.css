@@ -1381,12 +1381,26 @@ label[for="aparar-combate"], label[for="esquiva-combate"] {
   margin: 2px;
 }
 
-.subtrair-dano img:hover {
+#sofrer-dano:hover {
   transform: rotate(360deg);
 }
 
-.subtrair-dano img {
-  transition: transform 0.5s ease-out;
+#sofrer-dano {
+  transition: transform 0.4s ease-out;
+}
+
+@keyframes heart-beat {
+  0% {}
+  50% {transform: scale(1.4);}
+  100% {}
+}
+
+#curar-vida:hover {
+  animation: heart-beat 0.3s ease-in-out;
+}
+
+#curar-vida {
+  transition: transform 0.1s ease-out;
 }
 
 #esforco-20, #esforco-50 {
