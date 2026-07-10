@@ -211,26 +211,23 @@ function adicionarCondicao(id, nome) {
 var listaCondicoesModificadores = "";
 
 function adicionarListaCondicoesModificadores(condicao) {
-  // 1. Se receber uma string, transforma em array de 1 item. Se já for array, mantém.
   const condicoes = Array.isArray(condicao) ? condicao : [condicao];
 
-  // 2. Mapeia cada nome (ID) para o seu texto formatado nos dicionários
   const novasParcelas = condicoes.map(c => {
     if (c in condicoesCombate) return condicoesCombate[c];
     if (c in condicoesModificadores) return condicoesModificadores[c];
     if (c in condicoesDefesa) return condicoesDefesa[c];
-    return null; // Retorna nulo se não achar em nenhum dicionário
-  }).filter(Boolean); // 3. O filter(Boolean) remove todos os nulos/vazios da lista
+    return null;
+  }).filter(Boolean);
 
-  // Se não achou nenhuma tradução válida, só retorna o que já tinha antes
+
   if (novasParcelas.length === 0) {
     return listaCondicoesModificadores;
   }
 
-  // 4. Junta todas as novas condições encontradas colocando ", " entre elas
+  
   const textoNovo = novasParcelas.join(", ");
-
-  // 5. Concatena com a lista global (se ela já tiver algo) ou retorna apenas o texto novo
+  
   return listaCondicoesModificadores 
     ? listaCondicoesModificadores + ", " + textoNovo 
     : textoNovo;
