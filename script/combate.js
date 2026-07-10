@@ -39,6 +39,21 @@ function subtrairVida(dano, pctEstamina) {
   return danoSofrido
 }
 
+function recuperarVida(cura, recEstamina) {
+
+  var reducao;
+  const curaRecebida = Number(document.getElementById(cura).value) || 0;
+  const vidaAtual = document.getElementById("vida-combate");
+  const estaminaAtual = document.getElementById("estamina-combate");
+  const pct = Number(document.getElementById(recEstamina).value) || 0;
+
+  vidaAtual.value = Number(vidaAtual.value) + curaRecebida;
+  estaminaAtual.value = Number(estaminaAtual.value) + (pct/100)*curaRecebida;
+
+  recalcularTudo();
+  return danoSofrido;
+}
+
 function subtrairEstamina(reducao) {
   const estaminaAtual = document.getElementById("estamina-combate");
   estaminaAtual.value = estaminaAtual.value - reducao;

@@ -1355,7 +1355,8 @@ label[for="aparar-combate"], label[for="esquiva-combate"] {
   background-color: transparent;
 }
 .subtrair-dano {
-  display: flex;
+  display: grid;
+  grid-template-columns: 25% 20% 20% 20% 5%;
   width: 100%;
   align-items: center;
   gap: 5px;
@@ -1364,10 +1365,20 @@ label[for="aparar-combate"], label[for="esquiva-combate"] {
   margin-top: 5px;
 }
 
+.subtrair-dano label{
+  display: flex;
+  align-items: center;
+  gap: 5%;
+}
+
+.subtrair-dano div {
+  margin-left: auto;
+}
+
 .subtrair-dano input {
   font-size: 20px;
-  width: 15%;
   align-items: center;
+  margin: 2px;
 }
 
 .subtrair-dano img:hover {

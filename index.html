@@ -1531,18 +1531,45 @@
       <div id="acao-combate">
         <div class="subtrair-dano">
           <h2>Calculadora de Vida Restante</h2>
-          <label for="dano-sofrido">Dano:</label>
-          <input type="number" id="dano-sofrido" class="campo-editavel">
+          <div>
+            <label for="dano-sofrido">Dano:
+              <input type="number" id="dano-sofrido" class="campo-editavel">
+            </label>
 
-          <label for="pct-reducao">Redução da Estamina (%):</label>
-          <input type="number" id="pct-reducao" class="campo-editavel">
+            <label for="dano-sofrido">Cura:
+              <input type="number" id="cura-recebida" class="campo-editavel">
+            </label>
+          </div>
+          
+          <div>
+            <label for="pct-reducao">Estamina (%):
+              <input type="number" id="pct-reducao" class="campo-editavel">
+            </label>
 
-          <label for="sub-resistencia">Subtrair Resistência?</label>
-          <input type="checkbox" id="sub-res" class="config">
+            <label for="pct-reducao">Estamina (%):
+              <input type="number" id="rec-estamina" class="campo-editavel">
+            </label>
+          </div>
+          
+          <div>
+            <label for="sub-resistencia">Subtrair Resistência?
+              <input type="checkbox" id="sub-res" class="config">
+            </label>
+            <div>
+              <br><br>
+            </div>
+          </div>
+          
+          <div>
+            <button class="botao-img" onclick="subtrairVida('dano-sofrido', 'pct-reducao')" title="Subtrair Dano">
+              <img src="img/sword-spin.png" alt="Sofrer Dano">
+            </button>
 
-          <button class="botao-img" onclick="subtrairVida('dano-sofrido', 'pct-reducao')" title="Subtrair Dano">
-            <img src="img/sword-spin.png" alt="Sofrer Dano">
-          </button>
+            <button class="botao-img" onclick="recuperarVida('cura-recebida', 'rec-estamina')" title="Recuperar Vida">
+              <img src="img/sword-spin.png" alt="Sofrer Dano">
+            </button>
+          </div>
+          
         </div>
 
         <div class="consulta-dano crita" id="dano-teste">
