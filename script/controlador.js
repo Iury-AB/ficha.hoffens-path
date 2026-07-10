@@ -138,12 +138,10 @@ function checkEstaminaVida() {
     if(estaminaAtual <= 0.2*estaminaTotal && estaminaAtual > 0) {
       adicionarCondicao("fatigado", "Fatigado");
       atribuirDescricaoCondicao("fatigado");
-      console.log("fatigado");
     }
     else if(estaminaAtual <= 0) {
       adicionarCondicao("exausto", "Exausto");
       atribuirDescricaoCondicao("exausto");
-      console.log("exausto");
     }
   }
   

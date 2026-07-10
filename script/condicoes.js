@@ -65,9 +65,7 @@ const descCondicoes = {
 
 const condicoesModificadores = {
   "desabilitado": "Desabilitado [-5]",
-  "fluxo": "Fluxo [+2]",
   "prejudicado": "Prejudicado [-2]",
-  "receoso": "Receoso [-2]",
   "exausto": "Exausto [-2]",
 }
 
@@ -82,6 +80,11 @@ const condicoesDefesa = {
   "restrito": "Restrito",
   "surpreso": "Surpreso",
   "amarrado": "Amarrado",
+}
+
+const condicoesCombate = {
+  "fluxo": "Fluxo [+2]",
+  "receoso": "Receoso [-2]"
 }
 
 const aplicarEfeito = {
@@ -116,10 +119,10 @@ const aplicarEfeito = {
     aplicarModificadorDefesas(0, "#ff0000", "esquiva-combate");
   },
   "fluxo": () => {
-    adicionarAoModificadorGlobal(2);
+    adicionarAoModificadorCombate(2);
   },
   "receoso": () => {
-    adicionarAoModificadorGlobal(-2);
+    adicionarAoModificadorCombate(-2);
   },
   "surpreso": () => {
     aplicarModificadorDefesas(0.5, "#ff0000", "aparar-combate");
@@ -207,16 +210,30 @@ function adicionarCondicao(id, nome) {
 
 var listaCondicoesModificadores = "";
 
-function adicionarListaCondicoesModificadores (condicao) {
-  let condicaoSomada = "";
-  let condicaoParcela = (condicao in condicoesModificadores) ? condicoesModificadores[condicao] : condicoesDefesa[condicao];
+function adicionarListaCondicoesModificadores(condicao) {
+  // 1. Se receber uma string, transforma em array de 1 item. Se já for array, mantém.
+  const condicoes = Array.isArray(condicao) ? condicao : [condicao];
 
-  if(listaCondicoesModificadores) {
-    condicaoSomada = listaCondicoesModificadores + ", " + condicaoParcela;
-  } else {
-    condicaoSomada = condicaoParcela;
+  // 2. Mapeia cada nome (ID) para o seu texto formatado nos dicionários
+  const novasParcelas = condicoes.map(c => {
+    if (c in condicoesCombate) return condicoesCombate[c];
+    if (c in condicoesModificadores) return condicoesModificadores[c];
+    if (c in condicoesDefesa) return condicoesDefesa[c];
+    return null; // Retorna nulo se não achar em nenhum dicionário
+  }).filter(Boolean); // 3. O filter(Boolean) remove todos os nulos/vazios da lista
+
+  // Se não achou nenhuma tradução válida, só retorna o que já tinha antes
+  if (novasParcelas.length === 0) {
+    return listaCondicoesModificadores;
   }
-  return condicaoSomada;
+
+  // 4. Junta todas as novas condições encontradas colocando ", " entre elas
+  const textoNovo = novasParcelas.join(", ");
+
+  // 5. Concatena com a lista global (se ela já tiver algo) ou retorna apenas o texto novo
+  return listaCondicoesModificadores 
+    ? listaCondicoesModificadores + ", " + textoNovo 
+    : textoNovo;
 }
 
 function aplicarModificadorDeslocamento(fator, cor) {
@@ -245,23 +262,36 @@ function removerCondicao(condicao) {
 }
 
 var modificadorGlobalCondicao = 0;
+var modificadorCombate = 0;
 
 function adicionarAoModificadorGlobal(valor) {
   modificadorGlobalCondicao += valor;
 }
 
+function adicionarAoModificadorCombate(valor) {
+  modificadorCombate += valor;
+}
+
 function checkModificadorGlobal() {
   const modificadores = document.querySelectorAll(".modificadores-teste");
   
+  let modificadorTotal = modificadorGlobalCondicao;
   modificadores.forEach(modif => {
+    const container = modif.closest("button");
+    if (container.classList.contains("teste-combate")) {
+      modificadorTotal = modificadorGlobalCondicao + modificadorCombate;
+    }
+    else {
+      modificadorTotal = modificadorGlobalCondicao
+    }
 
-    if (modificadorGlobalCondicao < 0) {
-      modif.innerHTML = modificadorGlobalCondicao;
+    if (modificadorTotal < 0) {
+      modif.innerHTML = modificadorTotal;
       modif.classList.add("penalidade");
       modif.classList.remove("bonus");
     }
-    else if (modificadorGlobalCondicao > 0){
-      modif.innerHTML = "+" + modificadorGlobalCondicao;
+    else if (modificadorTotal > 0){
+      modif.innerHTML = "+" + modificadorTotal;
       modif.classList.add("bonus");
       modif.classList.remove("penalidade");
     }
@@ -276,6 +306,7 @@ function checkModificadorGlobal() {
 function checkCondicoes() {
   listaCondicoesModificadores = "";
   modificadorGlobalCondicao = 0;
+  modificadorCombate = 0;
 
   const deslocamento = document.getElementById("deslocamento-combate");
   deslocamento.style.backgroundColor = "transparent";
@@ -330,7 +361,7 @@ function checkCondicoes() {
       });
     }
   }
-
+  
   conjuntoCondicoes.forEach(condicaoReal => {
     if (aplicarEfeito[condicaoReal]) {
       aplicarEfeito[condicaoReal]();

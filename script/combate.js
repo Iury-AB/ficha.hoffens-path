@@ -217,7 +217,7 @@ function adicionarAtaque() {
 
     <label for="acerto-ataque-${contadorAtaques}">Acerto:
       <input type="number" name="acerto-ataque" id="acerto-ataque-${contadorAtaques}" class="campo-editavel dependente" placeholder="Acerto">
-      <button class="botao-rolar" onclick="testeAcerto(${contadorAtaques})">
+      <button class="botao-rolar teste-combate" onclick="testeAcerto(${contadorAtaques})">
         <div class="modificadores-teste"></div>
         <img src="img/d20.png" alt="rolar-acerto-${contadorAtaques}" title="Rolar Acerto ${contadorAtaques}">
       </button>
