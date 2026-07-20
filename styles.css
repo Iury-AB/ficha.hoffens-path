@@ -237,6 +237,7 @@ textarea {
   border: 2px solid var(--cor-secundaria);
   border-radius: 15px;
   margin: 5px;
+  padding: 10px;
 }
 
 .header-grid {
@@ -1629,3 +1630,7 @@ label[for="aparar-combate"], label[for="esquiva-combate"] {
   align-items: center;
 }
 
+#anotacoes-area {
+  resize: none;
+  height: 300px;
+}
