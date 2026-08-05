@@ -268,11 +268,13 @@ function removerAtaques() {
 
     if (lvl) {
       lvl.id = `nivel-ataque-${numero}`;
-      const botaoLvl = lvl.closest("button")
+      const label = lvl.closest("label");
+      const botaoLvl = label.querySelector(".botao-rolar");
       botaoLvl.onclick = () => testeAtaque(numero);
-      const imgLvl = botaoLvl.closest("img");
+      const imgLvl = botaoLvl.querySelector("img");
       imgLvl.title = `Rolar Ataque ${numero}`;
       imgLvl.alt = `rolar-nivel-${numero}`;
+      label.for = `nivel-ataque-${numero}`;
     }
 
     if (tipo) {
@@ -285,29 +287,33 @@ function removerAtaques() {
     }
 
     if(acerto) {
-      acerto.id = `nivel-ataque-${numero}`;
-      const botaoAcerto = acerto.closest("button")
+      acerto.id = `acerto-ataque-${numero}`;
+      const label = acerto.closest("label");
+      const botaoAcerto = label.querySelector(".botao-rolar");
       botaoAcerto.onclick = () => testeAcerto(numero);
-      const imgAcerto = botaoAcerto.closest("img");
+      const imgAcerto = botaoAcerto.querySelector("img");
       imgAcerto.title = `Rolagem de Acerto ${numero}`;
       imgAcerto.alt = `rolar-acerto-${numero}`;
+      label.for = `acerto-ataque-${numero}`;
     }
 
     if(rolagem) {
       rolagem.id = `rolagem-ataque-${numero}`;
-      const botaoRolagem = rolagem.closest("button")
+      const label = rolagem.closest("label");
+      const botaoRolagem = label.querySelector(".botao-rolar");
       botaoRolagem.onclick = () => testeRolagemAtaque(numero);
-      const imgRolagem = botaoRolagem.closest("img");
+      const imgRolagem = botaoRolagem.querySelector("img");
       imgRolagem.title = `Rolagem de Ataque ${numero}`;
       imgRolagem.alt = `rolagem-ataque-${numero}`;
+      label.for = `rolagem-ataque-${numero}`;
     }
 
     if(crit) {
       crit.id = `critico-ataque-${numero}`;
-      const check = crit.closest('input[type="checkbox"]');
+      const label = crit.closest("label");
+      const check = label.querySelector('input[type="checkbox"]');
       check.id = `critico-${numero}-check`;
       check.onchange = () => destacaCritico(`linha-ataque-${numero}`);
-      const label = crit.closest("label");
       label.for = `critico-${numero}-check`;
     }
   });
