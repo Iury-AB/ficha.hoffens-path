@@ -235,6 +235,8 @@ function limparFicha() {
   listaVantagens.innerHTML = "";
 
   contadorAtaques = 0;
+  const listaAtaques = document.querySelector(".lista-ataques");
+  listaAtaques.innerHTML = "";
 
   contadorModificadores = [];
   contadorEfeitos = [];
