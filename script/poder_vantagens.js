@@ -18,7 +18,7 @@ function adicionarPoder() {
   novoPoder.innerHTML = `
     <div class="span-2" style="display: flex;">
       <button title="Ocultar Efeitos do Poder" class="botao-img mostrar-poder" onclick="ocultarDetalhesPoder(${contadorPoderes})" id="mostrar-poder-${contadorPoderes}">
-        <img src="img/mais.png" alt="Mostrar Efeitos" class="toggle-show">
+        <img src="img/mais.png" alt="Mostrar Efeitos" class="toggle-show show">
       </button>
       <input type="text" id="nome-poder-${contadorPoderes}" placeholder="Nome do Poder ${contadorPoderes}" class="nome-poder">
       <button class="botao-img apagar-poder" title="Apagar Poder ${contadorPoderes}" onclick="removerPoder(${contadorPoderes})" id="apagar-poder-${contadorPoderes}">
@@ -26,7 +26,7 @@ function adicionarPoder() {
       </button>
     </div>
     
-    <div class="efeitos-modificadores">
+    <div class="efeitos-modificadores hide">
       <div class="efeitos-linha" style="margin-left:35px;">
         <label for="">Modif.</label>
         <label for="">Ligado</label>
@@ -51,7 +51,7 @@ function adicionarPoder() {
       </div>
     </div>
 
-    <div class="descricao-poder">
+    <div class="descricao-poder hide">
       <label for="">
         Descrição
       </label>
