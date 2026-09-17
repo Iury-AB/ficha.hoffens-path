@@ -101,6 +101,7 @@ function carregarFicha(nome) {
   const nAtaques = JSON.parse(localStorage.getItem(`contadorAtaques:${nome}`));
 
   const listaAtaques = document.querySelector(".lista-ataques");
+  listaAtaques.innerHTML = "";
 
   contadorAtaques = 0;
 
