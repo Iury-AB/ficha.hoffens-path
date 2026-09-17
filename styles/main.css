@@ -1,21 +1,21 @@
 @font-face {
   font-family: "comic";
-  src: url(fonts/comic.ttf);
+  src: url(../fonts/comic.ttf);
 }
 
 @font-face {
   font-family: "NerveAgent";
-  src: url(fonts/NerveAgentFilled-Regular.ttf);
+  src: url(../fonts/NerveAgentFilled-Regular.ttf);
 }
 
 @font-face {
   font-family: "BebasNeue Pro";
-  src: url(fonts/BEBAS-NEUE-PRO-BOLD-BF66CF3D7770DFE.TTF);
+  src: url(../fonts/BEBAS-NEUE-PRO-BOLD-BF66CF3D7770DFE.TTF);
 }
 
 @font-face {
   font-family: "Gill Sans MT";
-  src: url(fonts/GIL_____.TTF);
+  src: url(../fonts/GIL_____.TTF);
 }
 
 :root {
