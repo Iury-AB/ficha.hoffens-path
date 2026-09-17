@@ -87,6 +87,7 @@ function removerPoder (poder) {
     const addEfeito = linhaPoder.querySelector(".adicionar-efeito");
     const remEfeito = linhaPoder.querySelector(".remover-efeito");
     const descricaoPoder = linhaPoder.querySelector("textarea[name='descricao-poder']");
+    const custoPoder = linhaPoder.querySelector("[id^='pontos-poder']");
 
     linhaPoder.id = `poder-${indexPoder+1}`;
     
@@ -120,6 +121,9 @@ function removerPoder (poder) {
       descricaoPoder.id = `descricao-poder-${indexPoder+1}`;
       descricaoPoder.placeholder = `Descrição do poder ${indexPoder+1}`
     }
+    if(custoPoder) {
+      custoPoder.id = `pontos-poder-${indexPoder+1}`;
+    }
 
     const linhasEf = listaEfeitos.querySelectorAll(".efeitos-linha");
     
@@ -131,14 +135,16 @@ function removerPoder (poder) {
 
       reindexarModificadores(listaModif, indexPoder+1, indexEfeito+1, 0);
       
-      const listaAlt = linhaEfeito.querySelector(".lista-ligados");
-      listaAlt.id = `lista-ligados-${indexPoder+1}-${indexEfeito+1}`;
+      const listaLig = linhaEfeito.querySelector(".lista-ligados");
+      listaLig.id = `lista-ligados-${indexPoder+1}-${indexEfeito+1}`;
 
-      listaAlt.querySelectorAll(".ligados-linha").forEach((ligado, indexAlt) => {
-        atualizarAtributosLigado(ligado, indexPoder+1, indexEfeito+1, indexAlt+1);
+      listaLig.querySelectorAll(".ligados-linha").forEach((ligado, indexLig) => {
+        atualizarAtributosLigado(ligado, indexPoder+1, indexEfeito+1, indexLig+1);
 
-        const modifAlt = ligado.querySelector(".lista-modificadores");
-        reindexarModificadores(modifAlt, indexPoder+1, indexEfeito+1, indexAlt+1);
+        const modifLig = ligado.querySelector(".lista-modificadores");
+        modifLig.id = `lista-modificadores-${indexPoder+1}-${indexEfeito+1}-${indexLig+1}`;
+        
+        reindexarModificadores(modifLig, indexPoder+1, indexEfeito+1, indexLig+1);
       });
     });
   });
@@ -409,66 +415,72 @@ function reindexarModificadores(containerModificadores, poder, efeito, ligado) {
 }
 
 function atualizarAtributosEfeito(el, poder, indexEf, indexLig) {
-    const btnAddMod = el.querySelector("button[onclick^='adicionarModificadores']");
-    if(btnAddMod) {
-        btnAddMod.setAttribute("onclick", `adicionarModificadores(${poder}, ${indexEf}, ${indexLig})`);
-        btnAddMod.title = `Adicionar Modificador ao Efeito ${indexEf} do Poder ${poder}`;
-    }
 
-    const btnAddLig = el.querySelector("button[onclick^='adicionarLigado']");
-    if(btnAddLig) {
-        btnAddLig.id = `ligado-efeito-${indexEf}`;
-        btnAddLig.setAttribute("onclick", `adicionarLigado(${poder}, ${indexEf})`);
-        btnAddLig.title = `Adicionar Efeito Ligado ao Efeito ${indexEf}`;
-    }
-    
-    const btnRolar = el.querySelector("button[onclick^='rolarPoderPersonalizado']");
-    if(btnRolar) {
-        btnRolar.setAttribute("onclick", `rolarPoderPersonalizado(${poder}, ${indexEf}, ${indexLig})`);
-    }
+  el.id = `efeito-${poder}-${indexEf}`;
 
-    const lvl = el.querySelector("input[name='lvl-efeito']");
-    if(lvl) lvl.id = `lvl-efeito-${poder}-${indexEf}-${indexLig}`;
+  const btnAddMod = el.querySelector("button[onclick^='adicionarModificadores']");
+  if(btnAddMod) {
+      btnAddMod.setAttribute("onclick", `adicionarModificadores(${poder}, ${indexEf}, ${indexLig})`);
+      btnAddMod.title = `Adicionar Modificador ao Efeito ${indexEf} do Poder ${poder}`;
+  }
 
-    const custo = el.querySelector("input[name='custo-efeito']");
-    if(custo) custo.id = `custo-efeito-${poder}-${indexEf}`;
+  const btnAddLig = el.querySelector("button[onclick^='adicionarLigado']");
+  if(btnAddLig) {
+      btnAddLig.id = `ligado-efeito-${indexEf}`;
+      btnAddLig.setAttribute("onclick", `adicionarLigado(${poder}, ${indexEf})`);
+      btnAddLig.title = `Adicionar Efeito Ligado ao Efeito ${indexEf}`;
+  }
+  
+  const btnRolar = el.querySelector("button[onclick^='rolarPoderPersonalizado']");
+  if(btnRolar) {
+      btnRolar.setAttribute("onclick", `rolarPoderPersonalizado(${poder}, ${indexEf}, ${indexLig})`);
+  }
 
-    const nome = el.querySelector("input[name='nome-efeito']");
-    if(nome) {
-        nome.id = `nome-efeito-${poder}-${indexEf}-${indexLig}`;
-        nome.placeholder = `Efeito ${indexEf}`;
-    }
+  const lvl = el.querySelector("input[name='lvl-efeito']");
+  if(lvl) lvl.id = `lvl-efeito-${poder}-${indexEf}-${indexLig}`;
 
-    const pontos = el.querySelector("input[name='pontos-efeito']");
-    if(pontos) pontos.id = `pontos-efeito-${poder}-${indexEf}`;
+  const custo = el.querySelector("input[name='custo-efeito']");
+  if(custo) custo.id = `custo-efeito-${poder}-${indexEf}`;
+
+  const nome = el.querySelector("input[name='nome-efeito']");
+  if(nome) {
+      nome.id = `nome-efeito-${poder}-${indexEf}-${indexLig}`;
+      nome.placeholder = `Efeito ${indexEf}`;
+  }
+
+  const pontos = el.querySelector("input[name='pontos-efeito']");
+  if(pontos) pontos.id = `pontos-efeito-${poder}-${indexEf}`;
 }
 
 function atualizarAtributosLigado(el, poder, indexEf, indexLig) {
-    const btnAddMod = el.querySelector("button[onclick^='adicionarModificadores']");
-    if(btnAddMod) {
-        btnAddMod.setAttribute("onclick", `adicionarModificadores(${poder}, ${indexEf}, ${indexLig})`);
-        btnAddMod.title = `Adicionar Modificador ao ${indexLig}º Efeito Ligado do Efeito ${indexEf}`;
-    }
 
-    const btnRolar = el.querySelector("button[onclick^='rolarPoderPersonalizado']");
-    if(btnRolar) {
-        btnRolar.setAttribute("onclick", `rolarPoderPersonalizado(${poder}, ${indexEf}, ${indexLig})`);
-    }
+  el.id = `ligado-${poder}-${indexEf}-${indexLig}`;
 
-    const lvl = el.querySelector("input[name='lvl-ligado']");
-    if(lvl) lvl.id = `lvl-efeito-${poder}-${indexEf}-${indexLig}`;
+  const btnAddMod = el.querySelector("button[onclick^='adicionarModificadores']");
+  if(btnAddMod) {
+      btnAddMod.setAttribute("onclick", `adicionarModificadores(${poder}, ${indexEf}, ${indexLig})`);
+      btnAddMod.title = `Adicionar Modificador ao ${indexLig}º Efeito Ligado do Efeito ${indexEf}`;
+  }
 
-    const custo = el.querySelector("input[name='custo-ligado']");
-    if(custo) custo.id = `custo-efeito-${poder}-${indexEf}-${indexLig}`;
+  const btnRolar = el.querySelector("button[onclick^='rolarPoderPersonalizado']");
+  if(btnRolar) {
+      btnRolar.setAttribute("onclick", `rolarPoderPersonalizado(${poder}, ${indexEf}, ${indexLig})`);
+  }
 
-    const nome = el.querySelector("input[name='nome-ligado']");
-    if(nome) {
-        nome.id = `nome-efeito-${poder}-${indexEf}-${indexLig}`;
-        nome.placeholder = `Efeito Alternativo ${indexLig} do Efeito ${indexEf}`;
-    }
+  const lvl = el.querySelector("input[name='lvl-ligado']");
+  if(lvl) lvl.id = `lvl-efeito-${poder}-${indexEf}-${indexLig}`;
 
-    const pontos = el.querySelector("input[name='pontos-ligado']");
-    if(pontos) pontos.id = `pontos-ligado-${poder}-${indexEf}-${indexLig}`;
+  const custo = el.querySelector("input[name='custo-ligado']");
+  if(custo) custo.id = `custo-efeito-${poder}-${indexEf}-${indexLig}`;
+
+  const nome = el.querySelector("input[name='nome-ligado']");
+  if(nome) {
+      nome.id = `nome-efeito-${poder}-${indexEf}-${indexLig}`;
+      nome.placeholder = `Efeito Alternativo ${indexLig} do Efeito ${indexEf}`;
+  }
+
+  const pontos = el.querySelector("input[name='pontos-ligado']");
+  if(pontos) pontos.id = `pontos-ligado-${poder}-${indexEf}-${indexLig}`;
 }
 
 function adicionarModificadores(poder, efeito, ligado) {
